@@ -24,7 +24,7 @@
         .light-mode { background-color: #f3f4f6; color: #1f2937; }
         .dark-mode { background-color: #0f172a; color: #f8fafc; }
 
-        /* --- Dynamic Table Styles with Scaled Patterns --- */
+        /* --- Dynamic Table Styles --- */
         .poker-table {
             border: 12px solid #2d1e14;
             box-shadow: inset 0 0 80px rgba(0,0,0,0.6), 0 20px 50px rgba(0,0,0,0.4);
@@ -34,26 +34,48 @@
             max-width: 900px;
             min-height: 420px;
             margin: 0 auto;
-            transition: all 0.5s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Light Mode Table Border & Shadow Adjustment */
+        .light-mode .poker-table {
+            border-color: #d1d5db; /* Light grey border */
+            box-shadow: inset 0 0 80px rgba(255,255,255,0.4), 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* --- Easy Table Variations --- */
         .table-easy {
             background-color: #00ff88;
             background-image: radial-gradient(circle, #00ff88 0%, #059669 100%),
                               url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='15' cy='15' r='2.5' fill='%23ffffff' fill-opacity='0.4'/%3E%3C/svg%3E");
         }
+        .light-mode .table-easy {
+            background-image: radial-gradient(circle, #6ee7b7 0%, #10b981 100%),
+                              url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='15' cy='15' r='2.5' fill='%23ffffff' fill-opacity='0.5'/%3E%3C/svg%3E");
+        }
 
+        /* --- Medium Table Variations --- */
         .table-medium {
             background-color: #fbbf24;
             background-image: radial-gradient(circle, #fbbf24 0%, #b45309 100%), 
                               url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 0 L50 25 L25 50 L0 25 Z' stroke='%23ffffff' stroke-width='3' fill='none' stroke-opacity='0.4'/%3E%3C/svg%3E");
         }
+        .light-mode .table-medium {
+            background-image: radial-gradient(circle, #fbbf24 0%, #fef08a 100%), 
+                              url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 0 L50 25 L25 50 L0 25 Z' stroke='%23ffffff' stroke-width='3' fill='none' stroke-opacity='0.6'/%3E%3C/svg%3E");
+        }
 
+        /* --- Pro Table Variations --- */
         .table-pro {
             background-color: #2563eb;
             background-image: radial-gradient(circle, #3b82f6 0%, #1e3a8a 100%),
                               url("data:image/svg+xml,%3Csvg width='70' height='70' viewBox='0 0 70 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 35 L35 0 M35 70 L70 35 M35 0 L70 35 M0 35 L35 70 M0 0 L70 70 M70 0 L0 70' stroke='%23ffffff' stroke-width='2' fill='none' stroke-opacity='0.3'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23ffffff' fill-opacity='0.5'/%3E%3C/svg%3E");
             border-color: #020617;
+        }
+        .light-mode .table-pro {
+            background-image: radial-gradient(circle, #60a5fa 0%, #3b82f6 100%),
+                              url("data:image/svg+xml,%3Csvg width='70' height='70' viewBox='0 0 70 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 35 L35 0 M35 70 L70 35 M35 0 L70 35 M0 35 L35 70 M0 0 L70 70 M70 0 L0 70' stroke='%23ffffff' stroke-width='2' fill='none' stroke-opacity='0.5'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23ffffff' fill-opacity='0.7'/%3E%3C/svg%3E");
+            border-color: #94a3b8; /* Lighter border for Pro mode in light theme */
         }
 
         .card {
@@ -244,11 +266,11 @@
     <div id="gameScreen" class="screen flex-col items-center w-full">
         <div class="w-full max-w-5xl flex justify-between items-center mb-4 px-2">
             <div class="flex items-center gap-3">
-                <button onclick="showHome()" class="p-2 hover:opacity-70"><i class="fas fa-arrow-left"></i></button>
+                <button onclick="showHome()" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-full hover:bg-white/10"><i class="fas fa-arrow-left"></i></button>
                 <h1 class="text-xl md:text-2xl font-black tracking-tighter">ROYAL HOLD'EM</h1>
             </div>
             <div class="flex gap-2">
-                <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition-colors">
+                <button onclick="toggleTheme()" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-full hover:bg-white/10">
                     <i id="themeIcon" class="fas fa-sun"></i>
                 </button>
                 <button onclick="resetGame(true)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-bold border border-white/10">RESTART</button>
@@ -449,9 +471,11 @@
 
         function showBankruptcy() {
             const overlay = document.getElementById('overlay');
-            document.getElementById('overlayText').innerHTML = '<div class="text-red-500 font-black text-2xl uppercase">OUT OF CASH</div>';
-            document.getElementById('overlayAction').innerHTML = '<button onclick="resetGame(true)" class="mt-8 px-8 py-3 bg-red-600 text-white rounded-full font-black hover:scale-110 transition-transform">RESTART SESSION</button>';
-            overlay.classList.add('active');
+            const oText = document.getElementById('overlayText');
+            if (oText) oText.innerHTML = '<div class="text-red-500 font-black text-2xl uppercase">OUT OF CASH</div>';
+            const oAction = document.getElementById('overlayAction');
+            if (oAction) oAction.innerHTML = '<button onclick="resetGame(true)" class="mt-8 px-8 py-3 bg-red-600 text-white rounded-full font-black hover:scale-110 transition-transform">RESTART SESSION</button>';
+            if (overlay) overlay.classList.add('active');
         }
 
         function renderBots() {
@@ -562,13 +586,13 @@
         }
 
         function handleShowdown() {
-            bots.forEach(b => { if(!b.folded) document.querySelectorAll(`#botCards-${b.id} .card`).forEach(el => el.classList.add('flipped')); });
+            bots.forEach(b => { if(!b.folded) { const cards = document.querySelectorAll(`#botCards-${b.id} .card`); cards.forEach(el => el.classList.add('flipped')); } });
             const pHand = evaluateHand([...gameState.playerCards, ...gameState.communityCards]);
             let bestBot = { score: -1 };
             let winner = null;
             bots.forEach(b => { if(!b.folded) { const h = evaluateHand([...b.hand, ...gameState.communityCards]); if(h.score > bestBot.score) { bestBot = h; winner = b; } } });
             if (pHand.score > bestBot.score) endGame('WIN', pHand.name);
-            else if (bestBot.score > pHand.score) { endGame('LOSS', bestBot.name); addChatMessage(winner.name, winner.lines.win[0]); }
+            else if (bestBot.score > pHand.score) { endGame('LOSS', bestBot.name); if (winner) addChatMessage(winner.name, winner.lines.win[0]); }
             else endGame('DRAW', 'Split Pot');
         }
 
@@ -581,8 +605,9 @@
             const overlay = document.getElementById('overlay');
             const oText = document.getElementById('overlayText');
             if(oText) oText.innerHTML = res === 'WIN' ? '<span class="win-text">YOU WIN!</span>' : '<div class="loss-text">BOT WINS</div>';
-            document.getElementById('handRankText').innerText = hName;
-            setTimeout(() => overlay.classList.add('active'), 1000);
+            const handText = document.getElementById('handRankText');
+            if (handText) handText.innerText = hName;
+            if (overlay) setTimeout(() => overlay.classList.add('active'), 1000);
         }
 
         function evaluateHand(cards) {
