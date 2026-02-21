@@ -10,52 +10,64 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
         :root {
-            --poker-green: #1a472a;
-            --poker-felt: #2d5a3f;
+            --poker-green: #00ff88;
+            --poker-felt: #10b981;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
-            overflow-y: auto; /* Fixed: Allowing vertical scroll */
+            overflow-y: auto;
         }
 
-        .light-mode {
-            background-color: #f3f4f6;
-            color: #1f2937;
-        }
+        .light-mode { background-color: #f3f4f6; color: #1f2937; }
+        .dark-mode { background-color: #0f172a; color: #f8fafc; }
 
-        .dark-mode {
-            background-color: #0f172a;
-            color: #f8fafc;
-        }
-
-        /* Poker Table */
+        /* --- Dynamic Table Styles with HIGH CONTRAST White Patterns --- */
         .poker-table {
-            background: radial-gradient(circle, var(--poker-felt) 0%, var(--poker-green) 100%);
-            border: 12px solid #3d2b1f;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5), 0 20px 50px rgba(0,0,0,0.3);
+            border: 14px solid #2d1e14;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.7), 0 25px 60px rgba(0,0,0,0.5);
             border-radius: 200px;
             position: relative;
             width: 100%;
             max-width: 900px;
-            min-height: 400px;
+            min-height: 480px;
             margin: 0 auto;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Card Styles */
+        /* Easy: Super Bright Green with Bold White Polka Dots */
+        .table-easy {
+            background-color: #00ff88;
+            background-image: radial-gradient(circle, #00ff88 0%, #059669 100%),
+                              url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='3.5' fill='%23ffffff' fill-opacity='0.45'/%3E%3C/svg%3E");
+        }
+
+        /* Medium: Golden Amber with Bold White Diamond Trellis */
+        .table-medium {
+            background-color: #fbbf24;
+            background-image: radial-gradient(circle, #fbbf24 0%, #b45309 100%), 
+                              url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' stroke='%23ffffff' stroke-width='4' fill='none' stroke-opacity='0.45'/%3E%3C/svg%3E");
+        }
+
+        /* Pro: Sapphire Blue with Intricate Thick White Lattice */
+        .table-pro {
+            background-color: #2563eb;
+            background-image: radial-gradient(circle, #3b82f6 0%, #1e3a8a 100%),
+                              url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40 L40 0 M40 80 L80 40 M40 0 L80 40 M0 40 L40 80 M0 0 L80 80 M80 0 L0 80' stroke='%23ffffff' stroke-width='3' fill='none' stroke-opacity='0.35'/%3E%3Ccircle cx='40' cy='40' r='5' fill='%23ffffff' fill-opacity='0.6'/%3E%3C/svg%3E");
+            border-color: #020617;
+        }
+
         .card {
-            width: 55px;
-            height: 80px;
+            width: 50px;
+            height: 75px;
             perspective: 1000px;
             position: relative;
             transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        @media (min-width: 640px) {
-            .card { width: 65px; height: 95px; }
-        }
+        @media (min-width: 640px) { .card { width: 65px; height: 95px; } }
 
         .card-inner {
             position: relative;
@@ -66,34 +78,26 @@
             transform-style: preserve-3d;
         }
 
-        .card.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
+        .card.flipped .card-inner { transform: rotateY(180deg); }
 
         .card-front, .card-back {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 6px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        .card-front {
-            background: white;
-            color: black;
-            transform: rotateY(180deg);
-            border: 1px solid #ddd;
-        }
-
+        .card-front { background: white; color: black; transform: rotateY(180deg); border: 1px solid #e2e8f0; }
         .card-back {
             background: #1e293b;
-            background-image: repeating-linear-gradient(45deg, #334155 0, #334155 2px, transparent 0, transparent 50%);
-            background-size: 8px 8px;
+            background-image: repeating-linear-gradient(45deg, #334155 0, #334155 3px, transparent 0, transparent 50%);
+            background-size: 10px 10px;
             color: white;
             border: 2px solid #f8fafc;
         }
@@ -105,16 +109,12 @@
             from { transform: translate(-50%, -500%) scale(0.5); opacity: 0; }
             to { transform: translate(0, 0) scale(1); opacity: 1; }
         }
+        .dealing { animation: dealFromCenter 0.5s ease-out forwards; }
 
-        .dealing {
-            animation: dealFromCenter 0.5s ease-out forwards;
-        }
-
-        /* Overlays */
         .game-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.9);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -123,471 +123,594 @@
             pointer-events: none;
             transition: opacity 0.5s ease;
         }
-
-        .game-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        .game-overlay.active { opacity: 1; pointer-events: auto; }
 
         .win-text {
-            font-size: clamp(3rem, 10vw, 5rem);
+            font-size: clamp(3rem, 12vw, 6rem);
             font-weight: 900;
             background: linear-gradient(to bottom, #fde047, #ca8a04);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
             animation: bounce 1s infinite alternate;
         }
 
         .loss-text {
-            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-size: clamp(2.5rem, 10vw, 4rem);
             font-weight: 800;
-            color: #94a3b8;
+            color: #ef4444;
             text-align: center;
+            text-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
         }
 
-        @keyframes bounce {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
-        }
+        .bankruptcy-text { color: #ef4444; font-size: 2.5rem; font-weight: 900; text-transform: uppercase; }
+
+        @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.15); } }
 
         .chip {
-            width: 44px;
-            height: 44px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            border: 4px dashed rgba(255,255,255,0.3);
+            border: 5px dashed rgba(255,255,255,0.4);
             background: #e11d48;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 0.75rem;
-            font-weight: bold;
-            box-shadow: 0 4px 0 #9f1239;
+            font-size: 0.8rem;
+            font-weight: 900;
+            box-shadow: 0 6px 0 #9f1239, 0 10px 20px rgba(0,0,0,0.3);
         }
 
         .status-pill {
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(4px);
-            padding: 4px 12px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 5px 15px;
             border-radius: 999px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: white;
             white-space: nowrap;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .money-tag {
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.8);
             color: #fbbf24;
-            font-weight: 800;
-            padding: 2px 10px;
-            border-radius: 6px;
+            font-weight: 900;
+            padding: 4px 12px;
+            border-radius: 8px;
             font-size: 0.9rem;
-            border: 1px solid rgba(251, 191, 36, 0.3);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
+
+        .difficulty-btn.active { border-color: #3b82f6; background-color: rgba(59, 130, 246, 0.3); box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+
+        .screen { display: none; }
+        .screen.active { display: flex; }
 
         input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        
+        /* Bot PFP Styling */
+        .bot-pfp {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #1e293b;
+            padding: 4px;
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Responsive Controls Container */
-        .controls-wrapper {
-            margin-top: 2rem;
-            padding-bottom: 3rem;
+        .chat-container {
+            height: 150px;
+            overflow-y: auto;
+            scrollbar-width: none;
         }
+        .chat-container::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="dark-mode min-h-screen flex flex-col items-center p-4">
 
-    <!-- Top Bar -->
-    <div class="w-full max-w-4xl flex justify-between items-center mb-6">
-        <div class="flex items-center gap-4">
-            <h1 class="text-xl md:text-2xl font-black tracking-tighter">ROYAL HOLD'EM</h1>
-            <div id="gameStatus" class="status-pill hidden sm:block">Waiting to start...</div>
+    <!-- HOME SCREEN -->
+    <div id="homeScreen" class="screen active flex-col items-center justify-center min-h-[80vh] w-full max-w-lg text-center">
+        <div class="mb-10">
+            <div class="inline-block p-6 bg-amber-500 rounded-[2rem] mb-6 shadow-2xl shadow-amber-500/30">
+                <i class="fas fa-crown text-white text-6xl"></i>
+            </div>
+            <h1 class="text-6xl font-black tracking-tighter mb-2">ROYAL HOLD'EM</h1>
+            <p class="opacity-60 font-semibold text-lg">Hyper-Aggressive Poker Combat</p>
         </div>
-        <div class="flex gap-2">
-            <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition-colors">
-                <i id="themeIcon" class="fas fa-sun"></i>
+
+        <div class="w-full space-y-8 bg-white/5 p-10 rounded-[2.5rem] border border-white/10 backdrop-blur-md">
+            <div class="space-y-4 text-left">
+                <label class="text-xs font-black uppercase tracking-[0.2em] opacity-50">Select Challenge & Table Style</label>
+                <div class="grid grid-cols-3 gap-3">
+                    <button onclick="setDifficulty('easy')" id="diff-easy" class="difficulty-btn py-4 rounded-2xl border border-white/10 font-black hover:bg-white/10 transition-all">EASY</button>
+                    <button onclick="setDifficulty('medium')" id="diff-medium" class="difficulty-btn py-4 rounded-2xl border border-white/10 font-black hover:bg-white/10 transition-all active">MEDIUM</button>
+                    <button onclick="setDifficulty('pro')" id="diff-pro" class="difficulty-btn py-4 rounded-2xl border border-white/10 font-black hover:bg-white/10 transition-all">PRO</button>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-left">
+                <label class="text-xs font-black uppercase tracking-[0.2em] opacity-50">Opponents at Table</label>
+                <div class="flex gap-6 items-center bg-black/30 p-5 rounded-2xl">
+                    <button onclick="adjustBots(-1)" class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-xl"><i class="fas fa-minus"></i></button>
+                    <div class="flex-1 text-center">
+                        <span id="botCountDisplay" class="text-4xl font-black text-blue-400">1</span>
+                        <span class="text-xs opacity-50 block font-black uppercase mt-1">Bots</span>
+                    </div>
+                    <button onclick="adjustBots(1)" class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-xl"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+
+            <button onclick="startGame()" class="w-full py-6 bg-blue-600 hover:bg-blue-500 text-white rounded-[1.5rem] font-black text-2xl shadow-2xl shadow-blue-600/30 transition-all transform hover:scale-[1.03] active:scale-95">
+                START MATCH
             </button>
-            <button onclick="resetGame(true)" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs md:text-sm font-bold transition-all">
-                RESET SESSION
-            </button>
-        </div>
-    </div>
-
-    <!-- Table Container -->
-    <div class="w-full max-w-4xl">
-        <div class="poker-table flex flex-col items-center justify-between py-8 px-4 sm:px-12">
-            
-            <!-- Bot Area -->
-            <div class="flex flex-col items-center gap-2">
-                <div class="flex items-center gap-2 mb-1">
-                    <span class="text-[10px] sm:text-xs font-bold uppercase opacity-60">Deep Blue Bot</span>
-                    <div id="botBank" class="money-tag">$1000</div>
-                </div>
-                <div class="flex gap-2 mb-2" id="botCards">
-                    <!-- Cards injected here -->
-                </div>
-                <div class="status-pill bg-blue-600" id="botAction">WAITING</div>
-            </div>
-
-            <!-- Community Cards & Pot Sidebar -->
-            <div class="w-full relative flex items-center justify-center py-4">
-                <!-- Pot - Positioned to the left of the cards specifically -->
-                <div class="absolute left-0 sm:left-4 flex flex-col items-center pointer-events-none">
-                    <div class="chip mb-1">POT</div>
-                    <span class="text-lg sm:text-2xl font-black text-white" id="potAmount">$0</span>
-                </div>
-                
-                <div class="flex gap-1 sm:gap-3 h-24 items-center" id="communityCards">
-                    <!-- Community cards injected here -->
-                </div>
-            </div>
-
-            <!-- Player Area -->
-            <div class="flex flex-col items-center gap-2">
-                <div class="status-pill bg-green-600" id="playerAction">YOUR TURN</div>
-                <div class="flex gap-2 mt-2" id="playerCards">
-                    <!-- Cards injected here -->
-                </div>
-                <div class="flex items-center gap-2 mt-1">
-                    <span class="text-[10px] sm:text-xs font-bold uppercase opacity-60">You (Player)</span>
-                    <div id="playerBank" class="money-tag">$1000</div>
-                </div>
-            </div>
         </div>
     </div>
 
-    <!-- Controls -->
-    <div class="controls-wrapper flex flex-col gap-4 w-full max-w-2xl">
-        <div class="flex gap-2 sm:gap-3 w-full">
-            <button id="btnCheck" onclick="handleAction('CHECK')" class="flex-1 py-4 bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white rounded-2xl font-bold hover:scale-105 active:scale-95 transition-all disabled:opacity-30">
-                CHECK
-            </button>
-            <button id="btnCall" onclick="handleAction('CALL')" class="flex-1 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:scale-105 active:scale-95 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-30">
-                CALL
-            </button>
-            <button id="btnFold" onclick="handleAction('FOLD')" class="flex-1 py-4 bg-rose-600 text-white rounded-2xl font-bold hover:scale-105 active:scale-95 transition-all shadow-lg shadow-rose-500/20 disabled:opacity-30">
-                FOLD
-            </button>
+    <!-- GAME SCREEN -->
+    <div id="gameScreen" class="screen flex-col items-center w-full">
+        <div class="w-full max-w-5xl flex justify-between items-center mb-6 px-2">
+            <div class="flex items-center gap-4">
+                <button onclick="showHome()" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-full hover:bg-white/10"><i class="fas fa-arrow-left"></i></button>
+                <h1 class="text-2xl font-black tracking-tighter">ROYAL HOLD'EM</h1>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="toggleTheme()" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-full hover:bg-white/10">
+                    <i id="themeIcon" class="fas fa-sun"></i>
+                </button>
+                <button onclick="resetGame(true)" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-black tracking-tight border border-white/10">RESTART</button>
+            </div>
         </div>
-        
-        <div class="flex gap-3 items-center bg-slate-100 dark:bg-slate-800/50 p-3 rounded-2xl border border-white/10">
-            <div class="flex flex-col px-2">
-                <span class="text-[10px] font-bold uppercase opacity-50">Raise Amount</span>
-                <div class="flex items-center gap-1">
-                    <span class="font-bold opacity-70">$</span>
-                    <input id="raiseInput" type="number" value="100" min="10" step="10" class="bg-transparent border-none outline-none font-black text-xl w-20 sm:w-24 text-blue-500">
+
+        <div class="flex flex-col lg:flex-row gap-6 w-full max-w-6xl items-start">
+            <div class="flex-1 w-full">
+                <div id="pokerTable" class="poker-table flex flex-col items-center justify-between py-10 px-4 sm:px-12 mb-10">
+                    <div id="botsContainer" class="flex justify-around w-full max-w-3xl"></div>
+
+                    <div class="w-full relative flex items-center justify-center py-6">
+                        <div class="absolute left-0 sm:left-6 flex flex-col items-center pointer-events-none">
+                            <div class="chip mb-2">POT</div>
+                            <span class="text-3xl font-black text-white drop-shadow-lg" id="potAmount">$0</span>
+                        </div>
+                        <div class="flex gap-2 sm:gap-4 h-28 items-center" id="communityCards"></div>
+                    </div>
+
+                    <div class="flex flex-col items-center gap-3">
+                        <div class="status-pill bg-green-600 shadow-lg font-black uppercase tracking-wider" id="playerAction">YOUR TURN</div>
+                        <div class="flex gap-3 mt-1" id="playerCards"></div>
+                        <div class="flex items-center gap-3 mt-2">
+                            <span class="text-[10px] font-black uppercase opacity-60 tracking-widest">Player Stack</span>
+                            <div id="playerBank" class="money-tag">$1000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-5 w-full max-w-2xl mx-auto pb-16">
+                    <div class="flex gap-3 w-full">
+                        <button id="btnCheck" onclick="handleAction('CHECK')" class="flex-1 py-5 bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white rounded-[1.5rem] font-black text-lg hover:scale-105 transition-all disabled:opacity-20">CHECK</button>
+                        <button id="btnCall" onclick="handleAction('CALL')" class="flex-1 py-5 bg-blue-600 text-white rounded-[1.5rem] font-black text-lg hover:scale-105 transition-all shadow-xl disabled:opacity-20">CALL</button>
+                        <button id="btnFold" onclick="handleAction('FOLD')" class="flex-1 py-5 bg-rose-600 text-white rounded-[1.5rem] font-black text-lg hover:scale-105 transition-all shadow-xl disabled:opacity-20">FOLD</button>
+                    </div>
+                    <div class="flex gap-4 items-center bg-white/5 dark:bg-slate-800/40 p-4 rounded-[1.5rem] border border-white/10 shadow-inner">
+                        <div class="flex flex-col px-3 flex-1">
+                            <span class="text-[10px] font-black uppercase opacity-50 tracking-widest">Raise Bid</span>
+                            <div class="flex items-center gap-1">
+                                <span class="font-black text-2xl opacity-60">$</span>
+                                <input id="raiseInput" type="number" value="100" min="10" step="10" class="bg-transparent border-none outline-none font-black text-3xl w-full text-amber-400">
+                            </div>
+                        </div>
+                        <button id="btnRaise" onclick="handleAction('RAISE')" class="px-12 py-5 bg-amber-500 text-white rounded-2xl font-black text-xl hover:scale-105 transition-all uppercase shadow-lg">RAISE</button>
+                    </div>
                 </div>
             </div>
-            <button id="btnRaise" onclick="handleAction('RAISE')" class="flex-1 py-4 bg-amber-500 text-white rounded-xl font-bold hover:scale-105 active:scale-95 transition-all shadow-lg shadow-amber-500/20 disabled:opacity-30 uppercase">
-                RAISE IT
-            </button>
+
+            <div class="w-full lg:w-72 flex flex-col gap-4">
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-comment-dots text-blue-400"></i>
+                        <h3 class="text-xs font-black uppercase tracking-[0.2em] opacity-60">Table Talk</h3>
+                    </div>
+                    <div id="chatLog" class="chat-container flex flex-col gap-3">
+                        <div class="text-[11px] opacity-40 italic">Waiting for action...</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Win/Loss Overlay -->
     <div id="overlay" class="game-overlay">
-        <div class="flex flex-col items-center p-6 text-center">
+        <div class="flex flex-col items-center p-8 text-center bg-black/40 backdrop-blur-xl rounded-[3rem] border border-white/10 shadow-2xl">
             <div id="overlayText"></div>
-            <div id="handRankText" class="text-white mt-4 text-lg md:text-xl opacity-80"></div>
-            <button onclick="resetGame()" class="mt-8 px-10 py-4 bg-white text-black rounded-full font-black text-lg hover:scale-110 transition-transform">
-                NEXT HAND
-            </button>
+            <div id="handRankText" class="text-blue-300 mt-4 text-2xl font-black tracking-tight"></div>
+            <div id="overlayAction">
+                 <button onclick="resetGame()" class="mt-10 px-14 py-5 bg-white text-black rounded-full font-black text-2xl hover:scale-110 transition-transform shadow-xl">NEXT HAND</button>
+            </div>
         </div>
     </div>
 
     <script>
+        // CONFIG
+        let config = { difficulty: 'medium', bots: 1 };
         let playerTotalMoney = 1000;
-        let botTotalMoney = 1000;
+        let bots = [];
         const SUITS = ['♠', '♣', '♥', '♦'];
         const VALUES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
         const STAGES = ['PRE-FLOP', 'FLOP', 'TURN', 'RIVER', 'SHOWDOWN'];
+        
+        const BOT_PROFILES = [
+            { name: 'Vegas Vic', pfp: 'https://api.dicebear.com/7.x/bottts/svg?seed=Vic', lines: { win: ['Easy money, partner.', 'The house always wins.'], bluff: ['Had ya fooled!', 'Never doubted it.'], fold: ['Too rich for my blood.'], raise: ['Let\'s spice it up.'] } },
+            { name: 'Sharky Sam', pfp: 'https://api.dicebear.com/7.x/bottts/svg?seed=Sam', lines: { win: ['Nom nom nom chips.', 'You looked like bait.'], bluff: ['The shark circles...', 'Gotcha!'], fold: ['Not worth the bite.'], raise: ['Feeding time!'] } },
+            { name: 'Poker Pam', pfp: 'https://api.dicebear.com/7.x/bottts/svg?seed=Pam', lines: { win: ['Calculated.', 'As expected.'], bluff: ['Read the tells.', 'You blinked.'], fold: ['Inefficient odds.'], raise: ['Interesting move.'] } }
+        ];
+
         let deck = [];
-        let gameState = {
-            stage: 0,
-            pot: 0,
-            playerCards: [],
-            botCards: [],
-            communityCards: [],
-            isGameOver: false,
-            playerFolded: false,
-            botFolded: false
-        };
+        let gameState = { stage: 0, pot: 0, playerCards: [], communityCards: [], isGameOver: false };
+
+        // NAVIGATION
+        function setDifficulty(d) {
+            config.difficulty = d;
+            document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`diff-${d}`).classList.add('active');
+        }
+
+        function adjustBots(v) {
+            config.bots = Math.max(1, Math.min(3, config.bots + v));
+            document.getElementById('botCountDisplay').innerText = config.bots;
+        }
+
+        function applyTableTheme() {
+            const table = document.getElementById('pokerTable');
+            table.classList.remove('table-easy', 'table-medium', 'table-pro');
+            table.classList.add(`table-${config.difficulty}`);
+        }
+
+        function startGame() {
+            document.getElementById('homeScreen').classList.remove('active');
+            document.getElementById('gameScreen').classList.add('active');
+            applyTableTheme();
+            resetGame(true);
+        }
+
+        function showHome() {
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('homeScreen').classList.add('active');
+        }
 
         function toggleTheme() {
             const body = document.body;
-            const icon = document.getElementById('themeIcon');
-            if (body.classList.contains('dark-mode')) {
-                body.classList.replace('dark-mode', 'light-mode');
-                icon.className = 'fas fa-moon';
-            } else {
-                body.classList.replace('light-mode', 'dark-mode');
-                icon.className = 'fas fa-sun';
-            }
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
+            document.getElementById('themeIcon').className = body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon';
         }
 
+        function addChatMessage(sender, message) {
+            const log = document.getElementById('chatLog');
+            if (!log) return;
+            if (log.children[0] && log.children[0].classList.contains('italic')) log.innerHTML = '';
+            
+            const msgEl = document.createElement('div');
+            msgEl.className = 'flex flex-col gap-1 animate-in slide-in-from-right duration-300';
+            msgEl.innerHTML = `
+                <div class="flex items-center gap-1">
+                    <span class="text-[9px] font-black uppercase tracking-widest text-blue-400">${sender}</span>
+                </div>
+                <div class="bg-white/5 p-2 rounded-xl text-xs font-medium border border-white/5">${message}</div>
+            `;
+            log.prepend(msgEl);
+        }
+
+        // GAME LOGIC
         function createDeck() {
             const newDeck = [];
-            for (let s of SUITS) {
-                for (let v of VALUES) {
-                    newDeck.push({ value: v, suit: s, color: (s === '♥' || s === '♦') ? 'suit-red' : 'suit-black' });
-                }
-            }
+            for (let s of SUITS) for (let v of VALUES) newDeck.push({ value: v, suit: s, color: (s === '♥' || s === '♦') ? 'suit-red' : 'suit-black' });
             return newDeck.sort(() => Math.random() - 0.5);
         }
 
         function createCardUI(card, hidden = false) {
-            const cardEl = document.createElement('div');
-            cardEl.className = 'card dealing';
-            if (!hidden) setTimeout(() => cardEl.classList.add('flipped'), 100);
-            
-            cardEl.innerHTML = `
-                <div class="card-inner">
-                    <div class="card-back"><i class="fas fa-crown opacity-20 text-2xl sm:text-4xl"></i></div>
-                    <div class="card-front ${card.color}">
-                        <div class="absolute top-1 left-1 text-[10px] sm:text-xs leading-none">${card.value}<br>${card.suit}</div>
-                        <div class="text-xl sm:text-2xl">${card.suit}</div>
-                        <div class="absolute bottom-1 right-1 text-[10px] sm:text-xs leading-none rotate-180">${card.value}<br>${card.suit}</div>
-                    </div>
+            const el = document.createElement('div');
+            el.className = 'card dealing';
+            if (!hidden) setTimeout(() => el.classList.add('flipped'), 100);
+            el.innerHTML = `<div class="card-inner">
+                <div class="card-back"><i class="fas fa-crown opacity-20 text-3xl"></i></div>
+                <div class="card-front ${card.color}">
+                    <div class="absolute top-1 left-2 text-[12px] leading-tight font-black">${card.value}<br>${card.suit}</div>
+                    <div class="text-3xl">${card.suit}</div>
+                    <div class="absolute bottom-1 right-2 text-[12px] leading-tight font-black rotate-180">${card.value}<br>${card.suit}</div>
                 </div>
-            `;
-            return cardEl;
-        }
-
-        function updateUI() {
-            document.getElementById('playerBank').innerText = `$${playerTotalMoney}`;
-            document.getElementById('botBank').innerText = `$${botTotalMoney}`;
-            document.getElementById('potAmount').innerText = `$${gameState.pot}`;
+            </div>`;
+            return el;
         }
 
         async function resetGame(fullReset = false) {
             if (fullReset) {
                 playerTotalMoney = 1000;
-                botTotalMoney = 1000;
+                bots = Array.from({ length: config.bots }, (_, i) => {
+                    const profile = BOT_PROFILES[i % BOT_PROFILES.length];
+                    return { ...profile, id: i, money: 1000, hand: [], folded: false };
+                });
+                const chatLog = document.getElementById('chatLog');
+                if(chatLog) chatLog.innerHTML = '<div class="text-[11px] opacity-40 italic">New table started...</div>';
             }
+            if (playerTotalMoney < 25) { showBankruptcy(); return; }
 
             deck = createDeck();
             const ante = 25;
             playerTotalMoney -= ante;
-            botTotalMoney -= ante;
+            bots.forEach(b => { 
+                if (b.money < ante) b.money = 300; 
+                b.money -= ante; 
+                b.folded = false; 
+            });
+            
+            gameState = { stage: 0, pot: ante * (bots.length + 1), playerCards: [deck.pop(), deck.pop()], communityCards: [], isGameOver: false };
+            bots.forEach(b => b.hand = [deck.pop(), deck.pop()]);
 
-            gameState = {
-                stage: 0,
-                pot: ante * 2,
-                playerCards: [deck.pop(), deck.pop()],
-                botCards: [deck.pop(), deck.pop()],
-                communityCards: [],
-                isGameOver: false,
-                playerFolded: false,
-                botFolded: false
-            };
-
-            document.getElementById('playerCards').innerHTML = '';
-            document.getElementById('botCards').innerHTML = '';
-            document.getElementById('communityCards').innerHTML = '';
-            document.getElementById('overlay').classList.remove('active');
-            document.getElementById('gameStatus').innerText = 'Stage: PRE-FLOP';
-            document.getElementById('botAction').innerText = 'WAITING';
+            renderBots();
+            
+            // FIX: Removed legacy reference to null 'botCards' element
+            const pCards = document.getElementById('playerCards');
+            const cCards = document.getElementById('communityCards');
+            const overlay = document.getElementById('overlay');
+            
+            if(pCards) pCards.innerHTML = '';
+            if(cCards) cCards.innerHTML = '';
+            if(overlay) overlay.classList.remove('active');
+            
+            const playerAction = document.getElementById('playerAction');
+            if(playerAction) playerAction.innerText = 'YOUR TURN';
             
             updateUI();
             updateButtons(true);
 
             for (let i = 0; i < 2; i++) {
                 await wait(200);
-                document.getElementById('playerCards').appendChild(createCardUI(gameState.playerCards[i]));
-                await wait(200);
-                document.getElementById('botCards').appendChild(createCardUI(gameState.botCards[i], true));
+                if(pCards) pCards.appendChild(createCardUI(gameState.playerCards[i]));
+                for(let b of bots) {
+                    await wait(100);
+                    const botCardsContainer = document.getElementById(`botCards-${b.id}`);
+                    if(botCardsContainer) botCardsContainer.appendChild(createCardUI(b.hand[i], true));
+                }
             }
+        }
+
+        function showBankruptcy() {
+            const overlay = document.getElementById('overlay');
+            const oText = document.getElementById('overlayText');
+            const hText = document.getElementById('handRankText');
+            const oAction = document.getElementById('overlayAction');
+
+            if(oText) oText.innerHTML = '<div class="bankruptcy-text">BANKRUPT! MATCH LOST</div>';
+            if(hText) hText.innerText = "Stack is empty.";
+            if(oAction) oAction.innerHTML = '<button onclick="resetGame(true)" class="mt-8 px-10 py-4 bg-red-600 text-white rounded-full font-black text-xl hover:scale-110 transition-transform shadow-2xl shadow-red-600/30">RESTART SESSION</button>';
+            if(overlay) overlay.classList.add('active');
+        }
+
+        function renderBots() {
+            const container = document.getElementById('botsContainer');
+            if(!container) return;
+            container.innerHTML = '';
+            bots.forEach(b => {
+                const div = document.createElement('div');
+                div.className = 'flex flex-col items-center gap-1 transition-opacity duration-300';
+                if(b.folded) div.classList.add('opacity-40');
+                div.innerHTML = `
+                    <div class="flex items-center gap-2 mb-1">
+                        <img src="${b.pfp}" class="bot-pfp" alt="${b.name}">
+                        <div class="flex flex-col">
+                            <span class="text-[9px] font-black uppercase opacity-60">${b.name}</span>
+                            <div class="money-tag">$${b.money}</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-1 mb-2" id="botCards-${b.id}"></div>
+                    <div class="status-pill text-[10px] ${b.folded ? 'bg-slate-500' : 'bg-blue-600'} font-black" id="botAction-${b.id}">${b.folded ? 'FOLDED' : 'WAITING'}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateUI() {
+            const pBank = document.getElementById('playerBank');
+            const pAmount = document.getElementById('potAmount');
+            if(pBank) pBank.innerText = `$${playerTotalMoney}`;
+            if(pAmount) pAmount.innerText = `$${gameState.pot}`;
+        }
+
+        async function handleAction(type) {
+            updateButtons(false);
+            let pContrib = 0;
+            if (type === 'FOLD') { 
+                endGame('LOSS', 'Fell to pressure.'); 
+                const winner = bots.find(b => !b.folded) || bots[0];
+                addChatMessage(winner.name, "Smart move. I had it.");
+                return; 
+            }
+            if (type === 'RAISE') {
+                pContrib = Math.min(parseInt(document.getElementById('raiseInput').value) || 100, playerTotalMoney);
+                playerTotalMoney -= pContrib;
+                gameState.pot += pContrib;
+            } else if (type === 'CALL') {
+                pContrib = Math.min(50, playerTotalMoney);
+                playerTotalMoney -= pContrib;
+                gameState.pot += pContrib;
+            }
+            updateUI();
+
+            for(let b of bots) {
+                if(b.folded) continue;
+                const status = document.getElementById(`botAction-${b.id}`);
+                if(!status) continue;
+                status.innerText = 'THINKING...';
+                await wait(800);
+                
+                const str = evaluateHandStrength(b.hand, gameState.communityCards);
+                const diffLevel = config.difficulty;
+                
+                let botChoice = 'CHECK';
+                let raiseAmount = 0;
+
+                if (diffLevel === 'pro') {
+                    if (str >= 4 || (str >= 1 && Math.random() > 0.4)) { 
+                        botChoice = 'RAISE';
+                        raiseAmount = Math.max(200, Math.floor(gameState.pot * 0.5));
+                    } else if (Math.random() > 0.8) { 
+                        botChoice = 'BLUFF';
+                        raiseAmount = Math.floor(b.money * 0.3);
+                    } else {
+                        botChoice = 'CALL';
+                    }
+                } else if (diffLevel === 'medium') {
+                    if (str >= 5 || (str >= 2 && Math.random() > 0.7)) {
+                        botChoice = 'RAISE';
+                        raiseAmount = 150;
+                    } else {
+                        botChoice = 'CALL';
+                    }
+                } else { // Easy
+                    botChoice = str >= 2 ? 'CALL' : (Math.random() > 0.7 ? 'CALL' : 'FOLD');
+                }
+
+                if (botChoice === 'FOLD' && type === 'RAISE') {
+                    b.folded = true;
+                    status.innerText = 'FOLD';
+                    status.className = "status-pill text-[10px] bg-slate-500 font-black";
+                    addChatMessage(b.name, b.lines.fold[0]);
+                } else if (botChoice === 'RAISE' || botChoice === 'BLUFF') {
+                    const totalRaise = Math.min(raiseAmount + pContrib, b.money);
+                    b.money -= totalRaise;
+                    gameState.pot += totalRaise;
+                    status.innerText = (botChoice === 'BLUFF' ? 'BLUFF RAISE $' : 'HEAVY RAISE $') + totalRaise;
+                    status.className = "status-pill text-[10px] bg-amber-600 scale-110 font-black ring-2 ring-white/30";
+                    addChatMessage(b.name, b.lines.raise[Math.floor(Math.random() * b.lines.raise.length)]);
+                } else {
+                    const callVal = Math.min(pContrib || 50, b.money);
+                    b.money -= callVal;
+                    gameState.pot += callVal;
+                    status.innerText = callVal > 0 ? 'CALL' : 'CHECK';
+                    status.className = "status-pill text-[10px] bg-blue-600 font-black";
+                }
+                updateUI();
+            }
+
+            if (bots.every(b => b.folded)) { endGame('WIN', 'Bot total surrender.'); return; }
+            if (gameState.stage < 4) { await advanceStage(); if (gameState.stage < 4) updateButtons(true); }
         }
 
         async function advanceStage() {
             gameState.stage++;
-            const stageName = STAGES[gameState.stage];
-            document.getElementById('gameStatus').innerText = `Stage: ${stageName}`;
-
-            if (stageName === 'FLOP') {
-                for (let i = 0; i < 3; i++) {
-                    const c = deck.pop();
-                    gameState.communityCards.push(c);
-                    document.getElementById('communityCards').appendChild(createCardUI(c));
-                    await wait(300);
+            const cCards = document.getElementById('communityCards');
+            if (gameState.stage === 1) {
+                for(let i=0; i<3; i++) { 
+                    const c = deck.pop(); 
+                    gameState.communityCards.push(c); 
+                    if(cCards) cCards.appendChild(createCardUI(c)); 
+                    await wait(300); 
                 }
-            } else if (stageName === 'TURN' || stageName === 'RIVER') {
-                const c = deck.pop();
-                gameState.communityCards.push(c);
-                document.getElementById('communityCards').appendChild(createCardUI(c));
+            } else if (gameState.stage < 4) {
+                const c = deck.pop(); 
+                gameState.communityCards.push(c); 
+                if(cCards) cCards.appendChild(createCardUI(c)); 
                 await wait(300);
-            } else if (stageName === 'SHOWDOWN') {
+            } else {
                 handleShowdown();
             }
         }
 
-        async function handleAction(type) {
-            if (gameState.isGameOver) return;
-            updateButtons(false);
-            let playerContribution = 0;
-
-            if (type === 'FOLD') {
-                gameState.playerFolded = true;
-                endGame('LOSS', 'You folded.');
-                return;
-            }
-
-            if (type === 'RAISE') {
-                const raiseValue = Math.min(parseInt(document.getElementById('raiseInput').value) || 100, playerTotalMoney);
-                playerContribution = raiseValue;
-                playerTotalMoney -= raiseValue;
-                gameState.pot += raiseValue;
-            } else if (type === 'CALL') {
-                const callValue = Math.min(50, playerTotalMoney);
-                playerContribution = callValue;
-                playerTotalMoney -= callValue;
-                gameState.pot += callValue;
-            }
-            
-            updateUI();
-            document.getElementById('botAction').innerText = 'THINKING...';
-            await wait(1000);
-
-            const botStr = evaluateHandStrength(gameState.botCards, gameState.communityCards);
-            let botChoice = 'CHECK';
-            
-            if (type === 'RAISE') {
-                const isMassiveRaise = playerContribution > (gameState.pot / 2);
-                const botConfidence = botStr * (isMassiveRaise ? 0.6 : 1.2);
-                
-                if (botConfidence < 2) {
-                    botChoice = 'FOLD';
-                } else {
-                    botChoice = 'CALL';
-                    const botCallValue = Math.min(playerContribution, botTotalMoney);
-                    botTotalMoney -= botCallValue;
-                    gameState.pot += botCallValue;
-                }
-            } else {
-                botChoice = botStr > 1 ? (Math.random() > 0.3 ? 'CALL' : 'CHECK') : 'CHECK';
-                if (botChoice === 'CALL') {
-                    const botCallValue = Math.min(50, botTotalMoney);
-                    botTotalMoney -= botCallValue;
-                    gameState.pot += botCallValue;
-                }
-            }
-
-            if (botChoice === 'FOLD') {
-                document.getElementById('botAction').innerText = 'FOLD';
-                gameState.botFolded = true;
-                endGame('WIN', 'Bot folded!');
-                return;
-            }
-            
-            document.getElementById('botAction').innerText = botChoice;
-            updateUI();
-
-            if (gameState.stage < 4) {
-                await advanceStage();
-                if (gameState.stage < 4) updateButtons(true);
-            }
-        }
-
         function handleShowdown() {
-            const botCardsEls = document.querySelectorAll('#botCards .card');
-            botCardsEls.forEach(el => el.classList.add('flipped'));
+            bots.forEach(b => { 
+                if(!b.folded) {
+                    const cards = document.querySelectorAll(`#botCards-${b.id} .card`);
+                    cards.forEach(el => el.classList.add('flipped'));
+                }
+            });
             const pHand = evaluateHand([...gameState.playerCards, ...gameState.communityCards]);
-            const bHand = evaluateHand([...gameState.botCards, ...gameState.communityCards]);
+            let bestBotHand = { score: -1, name: 'None' };
+            let winningBot = null;
 
-            if (pHand.score > bHand.score) endGame('WIN', pHand.name);
-            else if (bHand.score > pHand.score) endGame('LOSS', bHand.name);
-            else endGame('DRAW', 'Split Pot');
+            bots.forEach(b => {
+                if(!b.folded) {
+                    const h = evaluateHand([...b.hand, ...gameState.communityCards]);
+                    if(h.score > bestBotHand.score) {
+                        bestBotHand = h;
+                        winningBot = b;
+                    }
+                }
+            });
+            if (pHand.score > bestBotHand.score) endGame('WIN', pHand.name);
+            else if (bestBotHand.score > pHand.score) {
+                endGame('LOSS', bestBotHand.name);
+                addChatMessage(winningBot.name, winningBot.lines.win[Math.floor(Math.random() * winningBot.lines.win.length)]);
+            } else endGame('DRAW', 'Split Pot');
         }
 
-        function endGame(result, handName) {
+        function endGame(res, hName) {
             gameState.isGameOver = true;
-            updateButtons(false);
-            
-            if (result === 'WIN') playerTotalMoney += gameState.pot;
-            else if (result === 'LOSS') botTotalMoney += gameState.pot;
-            else {
-                const split = Math.floor(gameState.pot / 2);
-                playerTotalMoney += split;
-                botTotalMoney += split;
-            }
-            
+            if (res === 'WIN') playerTotalMoney += gameState.pot;
+            else if (res === 'LOSS') bots[0].money += gameState.pot;
+            else { playerTotalMoney += gameState.pot/2; bots[0].money += gameState.pot/2; }
             updateUI();
+
             const overlay = document.getElementById('overlay');
-            const overlayText = document.getElementById('overlayText');
-            const handText = document.getElementById('handRankText');
+            const oText = document.getElementById('overlayText');
+            const hText = document.getElementById('handRankText');
+            const oAction = document.getElementById('overlayAction');
 
-            if (result === 'WIN') {
-                overlayText.innerHTML = '<span class="win-text">YOU WIN!</span>';
-                handText.innerText = handName;
-            } else if (result === 'LOSS') {
-                overlayText.innerHTML = '<div class="loss-text">BETTER LUCK<br>NEXT TIME</div>';
-                handText.innerText = handName;
-            } else {
-                overlayText.innerHTML = '<div class="loss-text">DRAW</div>';
-                handText.innerText = 'Split Pot';
-            }
+            if(oAction) oAction.innerHTML = '<button onclick="resetGame()" class="mt-10 px-14 py-5 bg-white text-black rounded-full font-black text-2xl hover:scale-110 transition-transform shadow-2xl">NEXT HAND</button>';
 
-            setTimeout(() => overlay.classList.add('active'), 1000);
+            if (res === 'WIN') { if(oText) oText.innerHTML = '<span class="win-text">YOU WIN!</span>'; }
+            else if (res === 'LOSS') { if(oText) oText.innerHTML = '<div class="loss-text">BOT VICTORIOUS</div>'; }
+            else { if(oText) oText.innerHTML = '<div class="loss-text" style="color:white">DRAW MATCH</div>'; }
+            
+            if(hText) hText.innerText = hName;
+            if(overlay) setTimeout(() => overlay.classList.add('active'), 1000);
         }
 
         function evaluateHand(cards) {
             const valMap = { '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14 };
-            const hand = cards.map(c => ({ v: valMap[c.value], s: c.suit }));
-            hand.sort((a, b) => b.v - a.v);
-            const counts = {};
-            hand.forEach(c => counts[c.v] = (counts[c.v] || 0) + 1);
-            const countArr = Object.values(counts).sort((a, b) => b - a);
-            const distinctValues = Object.keys(counts).map(Number).sort((a, b) => b - a);
-            const isFlush = SUITS.some(s => hand.filter(c => c.s === s).length >= 5);
-            let isStraight = false;
-            let straightHigh = 0;
-            for (let i = 0; i <= distinctValues.length - 5; i++) {
-                if (distinctValues[i] - distinctValues[i + 4] === 4) {
-                    isStraight = true;
-                    straightHigh = distinctValues[i];
-                    break;
-                }
-            }
-            if (!isStraight && [14, 5, 4, 3, 2].every(v => distinctValues.includes(v))) {
-                isStraight = true;
-                straightHigh = 5;
-            }
-            if (isFlush && isStraight && straightHigh === 14) return { score: 10, name: "Royal Flush" };
-            if (isFlush && isStraight) return { score: 9, name: "Straight Flush" };
-            if (countArr[0] === 4) return { score: 8, name: "Four of a Kind" };
-            if (countArr[0] === 3 && countArr[1] >= 2) return { score: 7, name: "Full House" };
-            if (isFlush) return { score: 6, name: "Flush" };
-            if (isStraight) return { score: 5, name: "Straight" };
-            if (countArr[0] === 3) return { score: 4, name: "Three of a Kind" };
-            if (countArr[0] === 2 && countArr[1] === 2) return { score: 3, name: "Two Pair" };
-            if (countArr[0] === 2) return { score: 2, name: "One Pair" };
-            return { score: 1, name: `High Card (${VALUES[distinctValues[0] - 2]})` };
+            const hand = cards.map(c => ({ v: valMap[c.value], s: c.suit })).sort((a,b) => b.v - a.v);
+            const counts = {}; hand.forEach(c => counts[c.v] = (counts[c.v] || 0) + 1);
+            const countArr = Object.values(counts).sort((a,b) => b-a);
+            const distinct = Object.keys(counts).map(Number).sort((a,b) => b-a);
+            const flush = SUITS.some(s => hand.filter(c => c.s === s).length >= 5);
+            
+            let straight = false, sHigh = 0;
+            for(let i=0; i<=distinct.length-5; i++) if(distinct[i]-distinct[i+4]===4) { straight=true; sHigh=distinct[i]; break; }
+            if(!straight && [14,5,4,3,2].every(v => distinct.includes(v))) { straight=true; sHigh=5; }
+
+            if(flush && straight && sHigh===14) return { score: 10, name: "Royal Flush" };
+            if(flush && straight) return { score: 9, name: "Straight Flush" };
+            if(countArr[0] === 4) return { score: 8, name: "Four of a Kind" };
+            if(countArr[0] === 3 && countArr[1] === 2) return { score: 7, name: "Full House" };
+            if(flush) return { score: 6, name: "Flush" };
+            if(straight) return { score: 5, name: "Straight" };
+            if(countArr[0] === 3) return { score: 4, name: "Three of a Kind" };
+            if(countArr[0] === 2 && countArr[1] === 2) return { score: 3, name: "Two Pair" };
+            if(countArr[0] === 2) return { score: 2, name: "One Pair" };
+            return { score: 1, name: "High Card" };
         }
 
-        function evaluateHandStrength(hole, community) {
-            if (community.length === 0) {
-                const v1 = hole[0].value;
-                const v2 = hole[1].value;
-                if (v1 === v2) return 5;
-                if (['A', 'K', 'Q'].includes(v1) || ['A', 'K', 'Q'].includes(v2)) return 3;
-                return 1;
+        function evaluateHandStrength(hole, comm) {
+            if (comm.length === 0) {
+                const high = Math.max(VALUES.indexOf(hole[0].value), VALUES.indexOf(hole[1].value));
+                return (hole[0].value === hole[1].value) ? 6 : (high > 10 ? 3 : 1);
             }
-            return evaluateHand([...hole, ...community]).score;
+            return evaluateHand([...hole, ...comm]).score;
         }
 
         function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
-
-        function updateButtons(enabled) {
-            const btns = ['btnCheck', 'btnCall', 'btnRaise', 'btnFold'];
-            btns.forEach(id => document.getElementById(id).disabled = !enabled);
-            document.getElementById('raiseInput').disabled = !enabled;
+        function updateButtons(e) { 
+            ['btnCheck', 'btnCall', 'btnRaise', 'btnFold'].forEach(id => {
+                const btn = document.getElementById(id);
+                if(btn) btn.disabled = !e;
+            });
+            const rInput = document.getElementById('raiseInput');
+            if(rInput) rInput.disabled = !e;
         }
-
-        window.onload = () => resetGame(true);
     </script>
 </body>
 </html>
