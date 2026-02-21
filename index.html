@@ -37,13 +37,11 @@
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Light Mode Table Border & Shadow Adjustment */
         .light-mode .poker-table {
-            border-color: #d1d5db; /* Light grey border */
+            border-color: #d1d5db;
             box-shadow: inset 0 0 80px rgba(255,255,255,0.4), 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        /* --- Easy Table Variations --- */
         .table-easy {
             background-color: #00ff88;
             background-image: radial-gradient(circle, #00ff88 0%, #059669 100%),
@@ -54,7 +52,6 @@
                               url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='15' cy='15' r='2.5' fill='%23ffffff' fill-opacity='0.5'/%3E%3C/svg%3E");
         }
 
-        /* --- Medium Table Variations --- */
         .table-medium {
             background-color: #fbbf24;
             background-image: radial-gradient(circle, #fbbf24 0%, #b45309 100%), 
@@ -65,7 +62,6 @@
                               url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 0 L50 25 L25 50 L0 25 Z' stroke='%23ffffff' stroke-width='3' fill='none' stroke-opacity='0.6'/%3E%3C/svg%3E");
         }
 
-        /* --- Pro Table Variations --- */
         .table-pro {
             background-color: #2563eb;
             background-image: radial-gradient(circle, #3b82f6 0%, #1e3a8a 100%),
@@ -75,7 +71,7 @@
         .light-mode .table-pro {
             background-image: radial-gradient(circle, #60a5fa 0%, #3b82f6 100%),
                               url("data:image/svg+xml,%3Csvg width='70' height='70' viewBox='0 0 70 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 35 L35 0 M35 70 L70 35 M35 0 L70 35 M0 35 L35 70 M0 0 L70 70 M70 0 L0 70' stroke='%23ffffff' stroke-width='2' fill='none' stroke-opacity='0.5'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23ffffff' fill-opacity='0.7'/%3E%3C/svg%3E");
-            border-color: #94a3b8; /* Lighter border for Pro mode in light theme */
+            border-color: #94a3b8;
         }
 
         .card {
@@ -266,11 +262,14 @@
     <div id="gameScreen" class="screen flex-col items-center w-full">
         <div class="w-full max-w-5xl flex justify-between items-center mb-4 px-2">
             <div class="flex items-center gap-3">
-                <button onclick="showHome()" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-full hover:bg-white/10"><i class="fas fa-arrow-left"></i></button>
+                <button onclick="showHome()" class="p-2 hover:opacity-70"><i class="fas fa-arrow-left"></i></button>
                 <h1 class="text-xl md:text-2xl font-black tracking-tighter">ROYAL HOLD'EM</h1>
             </div>
             <div class="flex gap-2">
-                <button onclick="toggleTheme()" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-full hover:bg-white/10">
+                <button onclick="toggleAudio()" class="p-2 rounded-full hover:bg-white/10 transition-colors">
+                    <i id="audioIcon" class="fas fa-volume-up"></i>
+                </button>
+                <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition-colors">
                     <i id="themeIcon" class="fas fa-sun"></i>
                 </button>
                 <button onclick="resetGame(true)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-bold border border-white/10">RESTART</button>
@@ -345,7 +344,8 @@
     </div>
 
     <script>
-        let config = { difficulty: 'medium', bots: 1 };
+        // CONFIG
+        let config = { difficulty: 'medium', bots: 1, audioMuted: false };
         let playerTotalMoney = 1000;
         let bots = [];
         const SUITS = ['♠', '♣', '♥', '♦'];
@@ -360,6 +360,96 @@
         let deck = [];
         let gameState = { stage: 0, pot: 0, playerCards: [], communityCards: [], isGameOver: false };
 
+        // REALISTIC AUDIO SYSTEM
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playSfx(type) {
+            if (config.audioMuted) return;
+            const now = audioCtx.currentTime;
+
+            const createNoiseNode = () => {
+                const bufferSize = audioCtx.sampleRate * 0.5;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const output = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
+                const noise = audioCtx.createBufferSource();
+                noise.buffer = buffer;
+                return noise;
+            };
+
+            switch(type) {
+                case 'deal': {
+                    const noise = createNoiseNode();
+                    const filter = audioCtx.createBiquadFilter();
+                    const gain = audioCtx.createGain();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(1000, now);
+                    filter.frequency.exponentialRampToValueAtTime(400, now + 0.1);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                    noise.connect(filter).connect(gain).connect(audioCtx.destination);
+                    noise.start(now);
+                    noise.stop(now + 0.12);
+                    break;
+                }
+                case 'flip': {
+                    const noise = createNoiseNode();
+                    const filter = audioCtx.createBiquadFilter();
+                    const gain = audioCtx.createGain();
+                    filter.type = 'bandpass';
+                    filter.frequency.setValueAtTime(1500, now);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                    noise.connect(filter).connect(gain).connect(audioCtx.destination);
+                    noise.start(now);
+                    noise.stop(now + 0.05);
+                    break;
+                }
+                case 'chip': {
+                    // Realistic ceramic clink - 3 high frequency sine waves with fast decay
+                    [2800, 3100, 3400].forEach((freq, i) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, now + (i * 0.002));
+                        gain.gain.setValueAtTime(0.05, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                        osc.connect(gain).connect(audioCtx.destination);
+                        osc.start(now);
+                        osc.stop(now + 0.05);
+                    });
+                    break;
+                }
+                case 'win': {
+                    // Chip spill effect
+                    for(let i=0; i<12; i++) {
+                        setTimeout(() => playSfx('chip'), i * 40);
+                    }
+                    break;
+                }
+                case 'loss': {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(120, now);
+                    osc.frequency.linearRampToValueAtTime(40, now + 0.6);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.linearRampToValueAtTime(0.001, now + 0.6);
+                    osc.connect(gain).connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.6);
+                    break;
+                }
+            }
+        }
+
+        function toggleAudio() {
+            config.audioMuted = !config.audioMuted;
+            document.getElementById('audioIcon').className = config.audioMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+            if (!config.audioMuted && audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        // NAVIGATION
         function setDifficulty(d) {
             config.difficulty = d;
             document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active', 'bg-blue-600/20', 'border-blue-500'));
@@ -381,6 +471,7 @@
         function startGame() {
             document.getElementById('homeScreen').classList.remove('active');
             document.getElementById('gameScreen').classList.add('active');
+            if (audioCtx.state === 'suspended') audioCtx.resume();
             applyTableTheme();
             resetGame(true);
         }
@@ -419,7 +510,10 @@
         function createCardUI(card, hidden = false) {
             const el = document.createElement('div');
             el.className = 'card dealing';
-            if (!hidden) setTimeout(() => el.classList.add('flipped'), 100);
+            if (!hidden) setTimeout(() => {
+                el.classList.add('flipped');
+                playSfx('flip');
+            }, 100);
             el.innerHTML = `<div class="card-inner">
                 <div class="card-back"><i class="fas fa-crown opacity-20 text-xl"></i></div>
                 <div class="card-front ${card.color}">
@@ -460,11 +554,17 @@
 
             for (let i = 0; i < 2; i++) {
                 await wait(200);
-                if(pCards) pCards.appendChild(createCardUI(gameState.playerCards[i]));
+                if(pCards) {
+                    pCards.appendChild(createCardUI(gameState.playerCards[i]));
+                    playSfx('deal');
+                }
                 for(let b of bots) {
                     await wait(100);
                     const container = document.getElementById(`botCards-${b.id}`);
-                    if(container) container.appendChild(createCardUI(b.hand[i], true));
+                    if(container) {
+                        container.appendChild(createCardUI(b.hand[i], true));
+                        playSfx('deal');
+                    }
                 }
             }
         }
@@ -476,6 +576,7 @@
             const oAction = document.getElementById('overlayAction');
             if (oAction) oAction.innerHTML = '<button onclick="resetGame(true)" class="mt-8 px-8 py-3 bg-red-600 text-white rounded-full font-black hover:scale-110 transition-transform">RESTART SESSION</button>';
             if (overlay) overlay.classList.add('active');
+            playSfx('loss');
         }
 
         function renderBots() {
@@ -517,6 +618,7 @@
                 addChatMessage(winner.name, "Easy pot.");
                 return; 
             }
+            playSfx('chip');
             if (type === 'RAISE') {
                 pContrib = Math.min(parseInt(document.getElementById('raiseInput').value) || 100, playerTotalMoney);
                 playerTotalMoney -= pContrib;
@@ -557,10 +659,12 @@
                     status.innerText = (choice === 'BLUFF' ? 'BLUFF $' : 'RAISE $') + total;
                     status.className = "status-pill text-[9px] bg-amber-600 font-black";
                     addChatMessage(b.name, b.lines.raise[0]);
+                    playSfx('chip');
                 } else {
                     const val = Math.min(pContrib || 50, b.money);
                     b.money -= val; gameState.pot += val;
                     status.innerText = val > 0 ? 'CALL' : 'CHECK';
+                    if (val > 0) playSfx('chip');
                 }
                 updateUI();
             }
@@ -575,18 +679,24 @@
             if (gameState.stage === 1) {
                 for(let i=0; i<3; i++) { 
                     const c = deck.pop(); gameState.communityCards.push(c); 
-                    if(container) container.appendChild(createCardUI(c)); 
+                    if(container) {
+                        container.appendChild(createCardUI(c)); 
+                        playSfx('deal');
+                    }
                     await wait(300); 
                 }
             } else if (gameState.stage < 4) {
                 const c = deck.pop(); gameState.communityCards.push(c); 
-                if(container) container.appendChild(createCardUI(c)); 
+                if(container) {
+                    container.appendChild(createCardUI(c)); 
+                    playSfx('deal');
+                }
                 await wait(300);
             } else handleShowdown();
         }
 
         function handleShowdown() {
-            bots.forEach(b => { if(!b.folded) { const cards = document.querySelectorAll(`#botCards-${b.id} .card`); cards.forEach(el => el.classList.add('flipped')); } });
+            bots.forEach(b => { if(!b.folded) { const cards = document.querySelectorAll(`#botCards-${b.id} .card`); cards.forEach(el => { el.classList.add('flipped'); playSfx('flip'); }); } });
             const pHand = evaluateHand([...gameState.playerCards, ...gameState.communityCards]);
             let bestBot = { score: -1 };
             let winner = null;
@@ -598,8 +708,8 @@
 
         function endGame(res, hName) {
             gameState.isGameOver = true;
-            if (res === 'WIN') playerTotalMoney += gameState.pot;
-            else if (res === 'LOSS') bots[0].money += gameState.pot;
+            if (res === 'WIN') { playerTotalMoney += gameState.pot; playSfx('win'); }
+            else if (res === 'LOSS') { bots[0].money += gameState.pot; playSfx('loss'); }
             else { playerTotalMoney += gameState.pot/2; bots[0].money += gameState.pot/2; }
             updateUI();
             const overlay = document.getElementById('overlay');
