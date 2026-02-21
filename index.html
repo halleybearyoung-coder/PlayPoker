@@ -24,38 +24,35 @@
         .light-mode { background-color: #f3f4f6; color: #1f2937; }
         .dark-mode { background-color: #0f172a; color: #f8fafc; }
 
-        /* --- Dynamic Table Styles with HIGH CONTRAST White Patterns --- */
+        /* --- Dynamic Table Styles with Scaled Patterns --- */
         .poker-table {
-            border: 14px solid #2d1e14;
-            box-shadow: inset 0 0 100px rgba(0,0,0,0.7), 0 25px 60px rgba(0,0,0,0.5);
+            border: 12px solid #2d1e14;
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.6), 0 20px 50px rgba(0,0,0,0.4);
             border-radius: 200px;
             position: relative;
             width: 100%;
             max-width: 900px;
-            min-height: 480px;
+            min-height: 420px;
             margin: 0 auto;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s ease;
         }
 
-        /* Easy: Super Bright Green with Bold White Polka Dots */
         .table-easy {
             background-color: #00ff88;
             background-image: radial-gradient(circle, #00ff88 0%, #059669 100%),
-                              url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='3.5' fill='%23ffffff' fill-opacity='0.45'/%3E%3C/svg%3E");
+                              url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='15' cy='15' r='2.5' fill='%23ffffff' fill-opacity='0.4'/%3E%3C/svg%3E");
         }
 
-        /* Medium: Golden Amber with Bold White Diamond Trellis */
         .table-medium {
             background-color: #fbbf24;
             background-image: radial-gradient(circle, #fbbf24 0%, #b45309 100%), 
-                              url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' stroke='%23ffffff' stroke-width='4' fill='none' stroke-opacity='0.45'/%3E%3C/svg%3E");
+                              url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 0 L50 25 L25 50 L0 25 Z' stroke='%23ffffff' stroke-width='3' fill='none' stroke-opacity='0.4'/%3E%3C/svg%3E");
         }
 
-        /* Pro: Sapphire Blue with Intricate Thick White Lattice */
         .table-pro {
             background-color: #2563eb;
             background-image: radial-gradient(circle, #3b82f6 0%, #1e3a8a 100%),
-                              url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40 L40 0 M40 80 L80 40 M40 0 L80 40 M0 40 L40 80 M0 0 L80 80 M80 0 L0 80' stroke='%23ffffff' stroke-width='3' fill='none' stroke-opacity='0.35'/%3E%3Ccircle cx='40' cy='40' r='5' fill='%23ffffff' fill-opacity='0.6'/%3E%3C/svg%3E");
+                              url("data:image/svg+xml,%3Csvg width='70' height='70' viewBox='0 0 70 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 35 L35 0 M35 70 L70 35 M35 0 L70 35 M0 35 L35 70 M0 0 L70 70 M70 0 L0 70' stroke='%23ffffff' stroke-width='2' fill='none' stroke-opacity='0.3'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23ffffff' fill-opacity='0.5'/%3E%3C/svg%3E");
             border-color: #020617;
         }
 
@@ -67,7 +64,7 @@
             transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        @media (min-width: 640px) { .card { width: 65px; height: 95px; } }
+        @media (min-width: 640px) { .card { width: 58px; height: 84px; } }
 
         .card-inner {
             position: relative;
@@ -85,19 +82,19 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 8px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
         }
 
         .card-front { background: white; color: black; transform: rotateY(180deg); border: 1px solid #e2e8f0; }
         .card-back {
             background: #1e293b;
-            background-image: repeating-linear-gradient(45deg, #334155 0, #334155 3px, transparent 0, transparent 50%);
-            background-size: 10px 10px;
+            background-image: repeating-linear-gradient(45deg, #334155 0, #334155 2px, transparent 0, transparent 50%);
+            background-size: 8px 8px;
             color: white;
             border: 2px solid #f8fafc;
         }
@@ -114,7 +111,7 @@
         .game-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.85);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -126,82 +123,58 @@
         .game-overlay.active { opacity: 1; pointer-events: auto; }
 
         .win-text {
-            font-size: clamp(3rem, 12vw, 6rem);
+            font-size: clamp(3rem, 10vw, 5rem);
             font-weight: 900;
             background: linear-gradient(to bottom, #fde047, #ca8a04);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-shadow: 0 10px 20px rgba(0,0,0,0.5);
             animation: bounce 1s infinite alternate;
         }
 
         .loss-text {
-            font-size: clamp(2.5rem, 10vw, 4rem);
+            font-size: clamp(2rem, 8vw, 3.5rem);
             font-weight: 800;
             color: #ef4444;
             text-align: center;
-            text-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
         }
 
-        .bankruptcy-text { color: #ef4444; font-size: 2.5rem; font-weight: 900; text-transform: uppercase; }
-
-        @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.15); } }
+        @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.1); } }
 
         .chip {
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            border: 5px dashed rgba(255,255,255,0.4);
+            border: 4px dashed rgba(255,255,255,0.3);
             background: #e11d48;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 0.8rem;
-            font-weight: 900;
-            box-shadow: 0 6px 0 #9f1239, 0 10px 20px rgba(0,0,0,0.3);
+            font-size: 0.75rem;
+            font-weight: 800;
+            box-shadow: 0 4px 0 #9f1239;
         }
 
         .status-pill {
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(10px);
-            padding: 5px 15px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            padding: 4px 12px;
             border-radius: 999px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: white;
             white-space: nowrap;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .money-tag {
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.7);
             color: #fbbf24;
-            font-weight: 900;
-            padding: 4px 12px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(251, 191, 36, 0.5);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .difficulty-btn.active { border-color: #3b82f6; background-color: rgba(59, 130, 246, 0.3); box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-
-        .screen { display: none; }
-        .screen.active { display: flex; }
-
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        
-        /* Bot PFP Styling */
-        .bot-pfp {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: #1e293b;
-            padding: 4px;
-            border: 2px solid rgba(255,255,255,0.1);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(251, 191, 36, 0.4);
         }
 
         .chat-container {
@@ -210,43 +183,58 @@
             scrollbar-width: none;
         }
         .chat-container::-webkit-scrollbar { display: none; }
+
+        .bot-pfp {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #1e293b;
+            padding: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .screen { display: none; }
+        .screen.active { display: flex; }
+
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 </head>
 <body class="dark-mode min-h-screen flex flex-col items-center p-4">
 
     <!-- HOME SCREEN -->
     <div id="homeScreen" class="screen active flex-col items-center justify-center min-h-[80vh] w-full max-w-lg text-center">
-        <div class="mb-10">
-            <div class="inline-block p-6 bg-amber-500 rounded-[2rem] mb-6 shadow-2xl shadow-amber-500/30">
-                <i class="fas fa-crown text-white text-6xl"></i>
+        <div class="mb-8">
+            <div class="inline-block p-4 bg-amber-500 rounded-3xl mb-4 shadow-2xl shadow-amber-500/20">
+                <i class="fas fa-crown text-white text-5xl"></i>
             </div>
-            <h1 class="text-6xl font-black tracking-tighter mb-2">ROYAL HOLD'EM</h1>
-            <p class="opacity-60 font-semibold text-lg">Hyper-Aggressive Poker Combat</p>
+            <h1 class="text-5xl font-black tracking-tighter mb-2">ROYAL HOLD'EM</h1>
+            <p class="opacity-50 font-medium italic">High-Stakes Combat</p>
         </div>
 
-        <div class="w-full space-y-8 bg-white/5 p-10 rounded-[2.5rem] border border-white/10 backdrop-blur-md">
-            <div class="space-y-4 text-left">
-                <label class="text-xs font-black uppercase tracking-[0.2em] opacity-50">Select Challenge & Table Style</label>
-                <div class="grid grid-cols-3 gap-3">
-                    <button onclick="setDifficulty('easy')" id="diff-easy" class="difficulty-btn py-4 rounded-2xl border border-white/10 font-black hover:bg-white/10 transition-all">EASY</button>
-                    <button onclick="setDifficulty('medium')" id="diff-medium" class="difficulty-btn py-4 rounded-2xl border border-white/10 font-black hover:bg-white/10 transition-all active">MEDIUM</button>
-                    <button onclick="setDifficulty('pro')" id="diff-pro" class="difficulty-btn py-4 rounded-2xl border border-white/10 font-black hover:bg-white/10 transition-all">PRO</button>
+        <div class="w-full space-y-6 bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-sm">
+            <div class="space-y-3 text-left">
+                <label class="text-xs font-black uppercase tracking-widest opacity-40">Difficulty & Style</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <button onclick="setDifficulty('easy')" id="diff-easy" class="difficulty-btn py-3 rounded-xl border border-white/10 font-bold hover:bg-white/5 transition-all">EASY</button>
+                    <button onclick="setDifficulty('medium')" id="diff-medium" class="difficulty-btn py-3 rounded-xl border border-white/10 font-bold hover:bg-white/5 transition-all active">MEDIUM</button>
+                    <button onclick="setDifficulty('pro')" id="diff-pro" class="difficulty-btn py-3 rounded-xl border border-white/10 font-bold hover:bg-white/5 transition-all">PRO</button>
                 </div>
             </div>
 
-            <div class="space-y-4 text-left">
-                <label class="text-xs font-black uppercase tracking-[0.2em] opacity-50">Opponents at Table</label>
-                <div class="flex gap-6 items-center bg-black/30 p-5 rounded-2xl">
-                    <button onclick="adjustBots(-1)" class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-xl"><i class="fas fa-minus"></i></button>
+            <div class="space-y-3 text-left">
+                <label class="text-xs font-black uppercase tracking-widest opacity-40">Opponents</label>
+                <div class="flex gap-4 items-center bg-black/20 p-4 rounded-xl">
+                    <button onclick="adjustBots(-1)" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"><i class="fas fa-minus"></i></button>
                     <div class="flex-1 text-center">
-                        <span id="botCountDisplay" class="text-4xl font-black text-blue-400">1</span>
-                        <span class="text-xs opacity-50 block font-black uppercase mt-1">Bots</span>
+                        <span id="botCountDisplay" class="text-3xl font-black text-blue-400">1</span>
+                        <span class="text-[10px] opacity-50 block font-bold uppercase">Bots</span>
                     </div>
-                    <button onclick="adjustBots(1)" class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-xl"><i class="fas fa-plus"></i></button>
+                    <button onclick="adjustBots(1)" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"><i class="fas fa-plus"></i></button>
                 </div>
             </div>
 
-            <button onclick="startGame()" class="w-full py-6 bg-blue-600 hover:bg-blue-500 text-white rounded-[1.5rem] font-black text-2xl shadow-2xl shadow-blue-600/30 transition-all transform hover:scale-[1.03] active:scale-95">
+            <button onclick="startGame()" class="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-black text-xl shadow-xl shadow-blue-600/20 transition-all transform hover:scale-[1.02] active:scale-95">
                 START MATCH
             </button>
         </div>
@@ -254,69 +242,69 @@
 
     <!-- GAME SCREEN -->
     <div id="gameScreen" class="screen flex-col items-center w-full">
-        <div class="w-full max-w-5xl flex justify-between items-center mb-6 px-2">
-            <div class="flex items-center gap-4">
-                <button onclick="showHome()" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-full hover:bg-white/10"><i class="fas fa-arrow-left"></i></button>
-                <h1 class="text-2xl font-black tracking-tighter">ROYAL HOLD'EM</h1>
+        <div class="w-full max-w-5xl flex justify-between items-center mb-4 px-2">
+            <div class="flex items-center gap-3">
+                <button onclick="showHome()" class="p-2 hover:opacity-70"><i class="fas fa-arrow-left"></i></button>
+                <h1 class="text-xl md:text-2xl font-black tracking-tighter">ROYAL HOLD'EM</h1>
             </div>
-            <div class="flex gap-3">
-                <button onclick="toggleTheme()" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-full hover:bg-white/10">
+            <div class="flex gap-2">
+                <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition-colors">
                     <i id="themeIcon" class="fas fa-sun"></i>
                 </button>
-                <button onclick="resetGame(true)" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-black tracking-tight border border-white/10">RESTART</button>
+                <button onclick="resetGame(true)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-bold border border-white/10">RESTART</button>
             </div>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-6 w-full max-w-6xl items-start">
             <div class="flex-1 w-full">
-                <div id="pokerTable" class="poker-table flex flex-col items-center justify-between py-10 px-4 sm:px-12 mb-10">
+                <div id="pokerTable" class="poker-table flex flex-col items-center justify-between py-6 px-4 sm:px-12 mb-6">
                     <div id="botsContainer" class="flex justify-around w-full max-w-3xl"></div>
 
-                    <div class="w-full relative flex items-center justify-center py-6">
-                        <div class="absolute left-0 sm:left-6 flex flex-col items-center pointer-events-none">
-                            <div class="chip mb-2">POT</div>
-                            <span class="text-3xl font-black text-white drop-shadow-lg" id="potAmount">$0</span>
+                    <div class="w-full relative flex items-center justify-center py-4">
+                        <div class="absolute left-0 sm:left-4 flex flex-col items-center pointer-events-none">
+                            <div class="chip mb-1 text-[10px]">POT</div>
+                            <span class="text-2xl font-black text-white" id="potAmount">$0</span>
                         </div>
-                        <div class="flex gap-2 sm:gap-4 h-28 items-center" id="communityCards"></div>
+                        <div class="flex gap-1 sm:gap-3 h-24 items-center" id="communityCards"></div>
                     </div>
 
-                    <div class="flex flex-col items-center gap-3">
-                        <div class="status-pill bg-green-600 shadow-lg font-black uppercase tracking-wider" id="playerAction">YOUR TURN</div>
-                        <div class="flex gap-3 mt-1" id="playerCards"></div>
-                        <div class="flex items-center gap-3 mt-2">
-                            <span class="text-[10px] font-black uppercase opacity-60 tracking-widest">Player Stack</span>
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="status-pill bg-green-600 text-[10px] font-black uppercase" id="playerAction">YOUR TURN</div>
+                        <div class="flex gap-2 mt-1" id="playerCards"></div>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="text-[9px] font-black uppercase opacity-60">Your Stack</span>
                             <div id="playerBank" class="money-tag">$1000</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-5 w-full max-w-2xl mx-auto pb-16">
-                    <div class="flex gap-3 w-full">
-                        <button id="btnCheck" onclick="handleAction('CHECK')" class="flex-1 py-5 bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white rounded-[1.5rem] font-black text-lg hover:scale-105 transition-all disabled:opacity-20">CHECK</button>
-                        <button id="btnCall" onclick="handleAction('CALL')" class="flex-1 py-5 bg-blue-600 text-white rounded-[1.5rem] font-black text-lg hover:scale-105 transition-all shadow-xl disabled:opacity-20">CALL</button>
-                        <button id="btnFold" onclick="handleAction('FOLD')" class="flex-1 py-5 bg-rose-600 text-white rounded-[1.5rem] font-black text-lg hover:scale-105 transition-all shadow-xl disabled:opacity-20">FOLD</button>
+                <div class="flex flex-col gap-4 w-full max-w-2xl mx-auto pb-10">
+                    <div class="flex gap-2 sm:gap-3 w-full">
+                        <button id="btnCheck" onclick="handleAction('CHECK')" class="flex-1 py-4 bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white rounded-2xl font-bold hover:scale-105 transition-all disabled:opacity-30">CHECK</button>
+                        <button id="btnCall" onclick="handleAction('CALL')" class="flex-1 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:scale-105 transition-all shadow-lg disabled:opacity-30">CALL</button>
+                        <button id="btnFold" onclick="handleAction('FOLD')" class="flex-1 py-4 bg-rose-600 text-white rounded-2xl font-bold hover:scale-105 transition-all shadow-lg disabled:opacity-30">FOLD</button>
                     </div>
-                    <div class="flex gap-4 items-center bg-white/5 dark:bg-slate-800/40 p-4 rounded-[1.5rem] border border-white/10 shadow-inner">
-                        <div class="flex flex-col px-3 flex-1">
-                            <span class="text-[10px] font-black uppercase opacity-50 tracking-widest">Raise Bid</span>
+                    <div class="flex gap-3 items-center bg-white/5 p-3 rounded-2xl border border-white/10">
+                        <div class="flex flex-col px-2 flex-1">
+                            <span class="text-[9px] font-black uppercase opacity-50">Raise Amount</span>
                             <div class="flex items-center gap-1">
-                                <span class="font-black text-2xl opacity-60">$</span>
-                                <input id="raiseInput" type="number" value="100" min="10" step="10" class="bg-transparent border-none outline-none font-black text-3xl w-full text-amber-400">
+                                <span class="font-bold text-lg opacity-70">$</span>
+                                <input id="raiseInput" type="number" value="100" min="10" step="10" class="bg-transparent border-none outline-none font-black text-xl w-full text-blue-500">
                             </div>
                         </div>
-                        <button id="btnRaise" onclick="handleAction('RAISE')" class="px-12 py-5 bg-amber-500 text-white rounded-2xl font-black text-xl hover:scale-105 transition-all uppercase shadow-lg">RAISE</button>
+                        <button id="btnRaise" onclick="handleAction('RAISE')" class="px-8 py-4 bg-amber-500 text-white rounded-xl font-bold hover:scale-105 transition-all uppercase">RAISE</button>
                     </div>
                 </div>
             </div>
 
-            <div class="w-full lg:w-72 flex flex-col gap-4">
-                <div class="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fas fa-comment-dots text-blue-400"></i>
-                        <h3 class="text-xs font-black uppercase tracking-[0.2em] opacity-60">Table Talk</h3>
+            <div class="w-full lg:w-64 flex flex-col gap-4">
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-5 backdrop-blur-sm">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i class="fas fa-comment-dots text-blue-400 text-sm"></i>
+                        <h3 class="text-[10px] font-black uppercase tracking-widest opacity-60">Table Talk</h3>
                     </div>
                     <div id="chatLog" class="chat-container flex flex-col gap-3">
-                        <div class="text-[11px] opacity-40 italic">Waiting for action...</div>
+                        <div class="text-[10px] opacity-40 italic">Waiting for action...</div>
                     </div>
                 </div>
             </div>
@@ -325,38 +313,36 @@
 
     <!-- Win/Loss Overlay -->
     <div id="overlay" class="game-overlay">
-        <div class="flex flex-col items-center p-8 text-center bg-black/40 backdrop-blur-xl rounded-[3rem] border border-white/10 shadow-2xl">
+        <div class="flex flex-col items-center p-6 text-center bg-black/40 backdrop-blur-xl rounded-[2.5rem] border border-white/10 shadow-2xl">
             <div id="overlayText"></div>
-            <div id="handRankText" class="text-blue-300 mt-4 text-2xl font-black tracking-tight"></div>
+            <div id="handRankText" class="text-blue-300 mt-2 text-xl font-bold"></div>
             <div id="overlayAction">
-                 <button onclick="resetGame()" class="mt-10 px-14 py-5 bg-white text-black rounded-full font-black text-2xl hover:scale-110 transition-transform shadow-xl">NEXT HAND</button>
+                 <button onclick="resetGame()" class="mt-8 px-10 py-4 bg-white text-black rounded-full font-black text-lg hover:scale-110 transition-transform">NEXT HAND</button>
             </div>
         </div>
     </div>
 
     <script>
-        // CONFIG
         let config = { difficulty: 'medium', bots: 1 };
         let playerTotalMoney = 1000;
         let bots = [];
         const SUITS = ['♠', '♣', '♥', '♦'];
         const VALUES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
         const STAGES = ['PRE-FLOP', 'FLOP', 'TURN', 'RIVER', 'SHOWDOWN'];
-        
         const BOT_PROFILES = [
             { name: 'Vegas Vic', pfp: 'https://api.dicebear.com/7.x/bottts/svg?seed=Vic', lines: { win: ['Easy money, partner.', 'The house always wins.'], bluff: ['Had ya fooled!', 'Never doubted it.'], fold: ['Too rich for my blood.'], raise: ['Let\'s spice it up.'] } },
-            { name: 'Sharky Sam', pfp: 'https://api.dicebear.com/7.x/bottts/svg?seed=Sam', lines: { win: ['Nom nom nom chips.', 'You looked like bait.'], bluff: ['The shark circles...', 'Gotcha!'], fold: ['Not worth the bite.'], raise: ['Feeding time!'] } },
+            { name: 'Sharky Sam', pfp: 'https://api.dicebear.com/7.x/bottts/svg?seed=Sam', lines: { win: ['Nom nom chips.', 'Bait hooked.'], bluff: ['Shark attack!', 'Gotcha!'], fold: ['Not worth the bite.'], raise: ['Feeding time!'] } },
             { name: 'Poker Pam', pfp: 'https://api.dicebear.com/7.x/bottts/svg?seed=Pam', lines: { win: ['Calculated.', 'As expected.'], bluff: ['Read the tells.', 'You blinked.'], fold: ['Inefficient odds.'], raise: ['Interesting move.'] } }
         ];
 
         let deck = [];
         let gameState = { stage: 0, pot: 0, playerCards: [], communityCards: [], isGameOver: false };
 
-        // NAVIGATION
         function setDifficulty(d) {
             config.difficulty = d;
-            document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`diff-${d}`).classList.add('active');
+            document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active', 'bg-blue-600/20', 'border-blue-500'));
+            const btn = document.getElementById(`diff-${d}`);
+            btn.classList.add('active', 'bg-blue-600/20', 'border-blue-500');
         }
 
         function adjustBots(v) {
@@ -393,19 +379,15 @@
             const log = document.getElementById('chatLog');
             if (!log) return;
             if (log.children[0] && log.children[0].classList.contains('italic')) log.innerHTML = '';
-            
             const msgEl = document.createElement('div');
             msgEl.className = 'flex flex-col gap-1 animate-in slide-in-from-right duration-300';
             msgEl.innerHTML = `
-                <div class="flex items-center gap-1">
-                    <span class="text-[9px] font-black uppercase tracking-widest text-blue-400">${sender}</span>
-                </div>
-                <div class="bg-white/5 p-2 rounded-xl text-xs font-medium border border-white/5">${message}</div>
+                <span class="text-[9px] font-black uppercase text-blue-400">${sender}</span>
+                <div class="bg-white/5 p-2 rounded-xl text-[10px] font-medium border border-white/5">${message}</div>
             `;
             log.prepend(msgEl);
         }
 
-        // GAME LOGIC
         function createDeck() {
             const newDeck = [];
             for (let s of SUITS) for (let v of VALUES) newDeck.push({ value: v, suit: s, color: (s === '♥' || s === '♦') ? 'suit-red' : 'suit-black' });
@@ -417,11 +399,11 @@
             el.className = 'card dealing';
             if (!hidden) setTimeout(() => el.classList.add('flipped'), 100);
             el.innerHTML = `<div class="card-inner">
-                <div class="card-back"><i class="fas fa-crown opacity-20 text-3xl"></i></div>
+                <div class="card-back"><i class="fas fa-crown opacity-20 text-xl"></i></div>
                 <div class="card-front ${card.color}">
-                    <div class="absolute top-1 left-2 text-[12px] leading-tight font-black">${card.value}<br>${card.suit}</div>
-                    <div class="text-3xl">${card.suit}</div>
-                    <div class="absolute bottom-1 right-2 text-[12px] leading-tight font-black rotate-180">${card.value}<br>${card.suit}</div>
+                    <div class="absolute top-1 left-1 text-[10px] leading-none">${card.value}<br>${card.suit}</div>
+                    <div class="text-xl">${card.suit}</div>
+                    <div class="absolute bottom-1 right-1 text-[10px] leading-none rotate-180">${card.value}<br>${card.suit}</div>
                 </div>
             </div>`;
             return el;
@@ -430,41 +412,27 @@
         async function resetGame(fullReset = false) {
             if (fullReset) {
                 playerTotalMoney = 1000;
-                bots = Array.from({ length: config.bots }, (_, i) => {
-                    const profile = BOT_PROFILES[i % BOT_PROFILES.length];
-                    return { ...profile, id: i, money: 1000, hand: [], folded: false };
-                });
+                bots = Array.from({ length: config.bots }, (_, i) => ({ ...BOT_PROFILES[i % BOT_PROFILES.length], id: i, money: 1000, hand: [], folded: false }));
                 const chatLog = document.getElementById('chatLog');
-                if(chatLog) chatLog.innerHTML = '<div class="text-[11px] opacity-40 italic">New table started...</div>';
+                if(chatLog) chatLog.innerHTML = '<div class="text-[10px] opacity-40 italic">New game...</div>';
             }
             if (playerTotalMoney < 25) { showBankruptcy(); return; }
 
             deck = createDeck();
             const ante = 25;
             playerTotalMoney -= ante;
-            bots.forEach(b => { 
-                if (b.money < ante) b.money = 300; 
-                b.money -= ante; 
-                b.folded = false; 
-            });
+            bots.forEach(b => { if (b.money < ante) b.money = 300; b.money -= ante; b.folded = false; });
             
             gameState = { stage: 0, pot: ante * (bots.length + 1), playerCards: [deck.pop(), deck.pop()], communityCards: [], isGameOver: false };
             bots.forEach(b => b.hand = [deck.pop(), deck.pop()]);
 
             renderBots();
-            
-            // FIX: Removed legacy reference to null 'botCards' element
             const pCards = document.getElementById('playerCards');
             const cCards = document.getElementById('communityCards');
             const overlay = document.getElementById('overlay');
-            
             if(pCards) pCards.innerHTML = '';
             if(cCards) cCards.innerHTML = '';
             if(overlay) overlay.classList.remove('active');
-            
-            const playerAction = document.getElementById('playerAction');
-            if(playerAction) playerAction.innerText = 'YOUR TURN';
-            
             updateUI();
             updateButtons(true);
 
@@ -473,22 +441,17 @@
                 if(pCards) pCards.appendChild(createCardUI(gameState.playerCards[i]));
                 for(let b of bots) {
                     await wait(100);
-                    const botCardsContainer = document.getElementById(`botCards-${b.id}`);
-                    if(botCardsContainer) botCardsContainer.appendChild(createCardUI(b.hand[i], true));
+                    const container = document.getElementById(`botCards-${b.id}`);
+                    if(container) container.appendChild(createCardUI(b.hand[i], true));
                 }
             }
         }
 
         function showBankruptcy() {
             const overlay = document.getElementById('overlay');
-            const oText = document.getElementById('overlayText');
-            const hText = document.getElementById('handRankText');
-            const oAction = document.getElementById('overlayAction');
-
-            if(oText) oText.innerHTML = '<div class="bankruptcy-text">BANKRUPT! MATCH LOST</div>';
-            if(hText) hText.innerText = "Stack is empty.";
-            if(oAction) oAction.innerHTML = '<button onclick="resetGame(true)" class="mt-8 px-10 py-4 bg-red-600 text-white rounded-full font-black text-xl hover:scale-110 transition-transform shadow-2xl shadow-red-600/30">RESTART SESSION</button>';
-            if(overlay) overlay.classList.add('active');
+            document.getElementById('overlayText').innerHTML = '<div class="text-red-500 font-black text-2xl uppercase">OUT OF CASH</div>';
+            document.getElementById('overlayAction').innerHTML = '<button onclick="resetGame(true)" class="mt-8 px-8 py-3 bg-red-600 text-white rounded-full font-black hover:scale-110 transition-transform">RESTART SESSION</button>';
+            overlay.classList.add('active');
         }
 
         function renderBots() {
@@ -507,8 +470,8 @@
                             <div class="money-tag">$${b.money}</div>
                         </div>
                     </div>
-                    <div class="flex gap-1 mb-2" id="botCards-${b.id}"></div>
-                    <div class="status-pill text-[10px] ${b.folded ? 'bg-slate-500' : 'bg-blue-600'} font-black" id="botAction-${b.id}">${b.folded ? 'FOLDED' : 'WAITING'}</div>
+                    <div class="flex gap-1 mb-1" id="botCards-${b.id}"></div>
+                    <div class="status-pill text-[9px] ${b.folded ? 'bg-slate-500' : 'bg-blue-600'} font-black" id="botAction-${b.id}">${b.folded ? 'FOLDED' : 'WAITING'}</div>
                 `;
                 container.appendChild(div);
             });
@@ -525,9 +488,9 @@
             updateButtons(false);
             let pContrib = 0;
             if (type === 'FOLD') { 
-                endGame('LOSS', 'Fell to pressure.'); 
+                endGame('LOSS', 'Folded.'); 
                 const winner = bots.find(b => !b.folded) || bots[0];
-                addChatMessage(winner.name, "Smart move. I had it.");
+                addChatMessage(winner.name, "Easy pot.");
                 return; 
             }
             if (type === 'RAISE') {
@@ -546,106 +509,67 @@
                 const status = document.getElementById(`botAction-${b.id}`);
                 if(!status) continue;
                 status.innerText = 'THINKING...';
-                await wait(800);
-                
+                await wait(600);
                 const str = evaluateHandStrength(b.hand, gameState.communityCards);
-                const diffLevel = config.difficulty;
-                
-                let botChoice = 'CHECK';
-                let raiseAmount = 0;
+                let choice = 'CALL';
+                let raise = 0;
 
-                if (diffLevel === 'pro') {
-                    if (str >= 4 || (str >= 1 && Math.random() > 0.4)) { 
-                        botChoice = 'RAISE';
-                        raiseAmount = Math.max(200, Math.floor(gameState.pot * 0.5));
-                    } else if (Math.random() > 0.8) { 
-                        botChoice = 'BLUFF';
-                        raiseAmount = Math.floor(b.money * 0.3);
-                    } else {
-                        botChoice = 'CALL';
-                    }
-                } else if (diffLevel === 'medium') {
-                    if (str >= 5 || (str >= 2 && Math.random() > 0.7)) {
-                        botChoice = 'RAISE';
-                        raiseAmount = 150;
-                    } else {
-                        botChoice = 'CALL';
-                    }
-                } else { // Easy
-                    botChoice = str >= 2 ? 'CALL' : (Math.random() > 0.7 ? 'CALL' : 'FOLD');
+                if (config.difficulty === 'pro') {
+                    if (str >= 4 || (str >= 1 && Math.random() > 0.4)) { choice = 'RAISE'; raise = 200; }
+                    else if (Math.random() > 0.8) choice = 'BLUFF';
+                } else if (config.difficulty === 'medium') {
+                    if (str >= 5) { choice = 'RAISE'; raise = 100; }
+                } else {
+                    if (str < 2 && Math.random() > 0.7) choice = 'FOLD';
                 }
 
-                if (botChoice === 'FOLD' && type === 'RAISE') {
+                if (choice === 'FOLD' && type === 'RAISE') {
                     b.folded = true;
                     status.innerText = 'FOLD';
-                    status.className = "status-pill text-[10px] bg-slate-500 font-black";
                     addChatMessage(b.name, b.lines.fold[0]);
-                } else if (botChoice === 'RAISE' || botChoice === 'BLUFF') {
-                    const totalRaise = Math.min(raiseAmount + pContrib, b.money);
-                    b.money -= totalRaise;
-                    gameState.pot += totalRaise;
-                    status.innerText = (botChoice === 'BLUFF' ? 'BLUFF RAISE $' : 'HEAVY RAISE $') + totalRaise;
-                    status.className = "status-pill text-[10px] bg-amber-600 scale-110 font-black ring-2 ring-white/30";
-                    addChatMessage(b.name, b.lines.raise[Math.floor(Math.random() * b.lines.raise.length)]);
+                } else if (choice === 'RAISE' || choice === 'BLUFF') {
+                    const total = Math.min((raise || 100) + pContrib, b.money);
+                    b.money -= total; gameState.pot += total;
+                    status.innerText = (choice === 'BLUFF' ? 'BLUFF $' : 'RAISE $') + total;
+                    status.className = "status-pill text-[9px] bg-amber-600 font-black";
+                    addChatMessage(b.name, b.lines.raise[0]);
                 } else {
-                    const callVal = Math.min(pContrib || 50, b.money);
-                    b.money -= callVal;
-                    gameState.pot += callVal;
-                    status.innerText = callVal > 0 ? 'CALL' : 'CHECK';
-                    status.className = "status-pill text-[10px] bg-blue-600 font-black";
+                    const val = Math.min(pContrib || 50, b.money);
+                    b.money -= val; gameState.pot += val;
+                    status.innerText = val > 0 ? 'CALL' : 'CHECK';
                 }
                 updateUI();
             }
 
-            if (bots.every(b => b.folded)) { endGame('WIN', 'Bot total surrender.'); return; }
+            if (bots.every(b => b.folded)) { endGame('WIN', 'Bot Surrender'); return; }
             if (gameState.stage < 4) { await advanceStage(); if (gameState.stage < 4) updateButtons(true); }
         }
 
         async function advanceStage() {
             gameState.stage++;
-            const cCards = document.getElementById('communityCards');
+            const container = document.getElementById('communityCards');
             if (gameState.stage === 1) {
                 for(let i=0; i<3; i++) { 
-                    const c = deck.pop(); 
-                    gameState.communityCards.push(c); 
-                    if(cCards) cCards.appendChild(createCardUI(c)); 
+                    const c = deck.pop(); gameState.communityCards.push(c); 
+                    if(container) container.appendChild(createCardUI(c)); 
                     await wait(300); 
                 }
             } else if (gameState.stage < 4) {
-                const c = deck.pop(); 
-                gameState.communityCards.push(c); 
-                if(cCards) cCards.appendChild(createCardUI(c)); 
+                const c = deck.pop(); gameState.communityCards.push(c); 
+                if(container) container.appendChild(createCardUI(c)); 
                 await wait(300);
-            } else {
-                handleShowdown();
-            }
+            } else handleShowdown();
         }
 
         function handleShowdown() {
-            bots.forEach(b => { 
-                if(!b.folded) {
-                    const cards = document.querySelectorAll(`#botCards-${b.id} .card`);
-                    cards.forEach(el => el.classList.add('flipped'));
-                }
-            });
+            bots.forEach(b => { if(!b.folded) document.querySelectorAll(`#botCards-${b.id} .card`).forEach(el => el.classList.add('flipped')); });
             const pHand = evaluateHand([...gameState.playerCards, ...gameState.communityCards]);
-            let bestBotHand = { score: -1, name: 'None' };
-            let winningBot = null;
-
-            bots.forEach(b => {
-                if(!b.folded) {
-                    const h = evaluateHand([...b.hand, ...gameState.communityCards]);
-                    if(h.score > bestBotHand.score) {
-                        bestBotHand = h;
-                        winningBot = b;
-                    }
-                }
-            });
-            if (pHand.score > bestBotHand.score) endGame('WIN', pHand.name);
-            else if (bestBotHand.score > pHand.score) {
-                endGame('LOSS', bestBotHand.name);
-                addChatMessage(winningBot.name, winningBot.lines.win[Math.floor(Math.random() * winningBot.lines.win.length)]);
-            } else endGame('DRAW', 'Split Pot');
+            let bestBot = { score: -1 };
+            let winner = null;
+            bots.forEach(b => { if(!b.folded) { const h = evaluateHand([...b.hand, ...gameState.communityCards]); if(h.score > bestBot.score) { bestBot = h; winner = b; } } });
+            if (pHand.score > bestBot.score) endGame('WIN', pHand.name);
+            else if (bestBot.score > pHand.score) { endGame('LOSS', bestBot.name); addChatMessage(winner.name, winner.lines.win[0]); }
+            else endGame('DRAW', 'Split Pot');
         }
 
         function endGame(res, hName) {
@@ -654,20 +578,11 @@
             else if (res === 'LOSS') bots[0].money += gameState.pot;
             else { playerTotalMoney += gameState.pot/2; bots[0].money += gameState.pot/2; }
             updateUI();
-
             const overlay = document.getElementById('overlay');
             const oText = document.getElementById('overlayText');
-            const hText = document.getElementById('handRankText');
-            const oAction = document.getElementById('overlayAction');
-
-            if(oAction) oAction.innerHTML = '<button onclick="resetGame()" class="mt-10 px-14 py-5 bg-white text-black rounded-full font-black text-2xl hover:scale-110 transition-transform shadow-2xl">NEXT HAND</button>';
-
-            if (res === 'WIN') { if(oText) oText.innerHTML = '<span class="win-text">YOU WIN!</span>'; }
-            else if (res === 'LOSS') { if(oText) oText.innerHTML = '<div class="loss-text">BOT VICTORIOUS</div>'; }
-            else { if(oText) oText.innerHTML = '<div class="loss-text" style="color:white">DRAW MATCH</div>'; }
-            
-            if(hText) hText.innerText = hName;
-            if(overlay) setTimeout(() => overlay.classList.add('active'), 1000);
+            if(oText) oText.innerHTML = res === 'WIN' ? '<span class="win-text">YOU WIN!</span>' : '<div class="loss-text">BOT WINS</div>';
+            document.getElementById('handRankText').innerText = hName;
+            setTimeout(() => overlay.classList.add('active'), 1000);
         }
 
         function evaluateHand(cards) {
@@ -677,12 +592,8 @@
             const countArr = Object.values(counts).sort((a,b) => b-a);
             const distinct = Object.keys(counts).map(Number).sort((a,b) => b-a);
             const flush = SUITS.some(s => hand.filter(c => c.s === s).length >= 5);
-            
             let straight = false, sHigh = 0;
             for(let i=0; i<=distinct.length-5; i++) if(distinct[i]-distinct[i+4]===4) { straight=true; sHigh=distinct[i]; break; }
-            if(!straight && [14,5,4,3,2].every(v => distinct.includes(v))) { straight=true; sHigh=5; }
-
-            if(flush && straight && sHigh===14) return { score: 10, name: "Royal Flush" };
             if(flush && straight) return { score: 9, name: "Straight Flush" };
             if(countArr[0] === 4) return { score: 8, name: "Four of a Kind" };
             if(countArr[0] === 3 && countArr[1] === 2) return { score: 7, name: "Full House" };
@@ -695,22 +606,12 @@
         }
 
         function evaluateHandStrength(hole, comm) {
-            if (comm.length === 0) {
-                const high = Math.max(VALUES.indexOf(hole[0].value), VALUES.indexOf(hole[1].value));
-                return (hole[0].value === hole[1].value) ? 6 : (high > 10 ? 3 : 1);
-            }
+            if (comm.length === 0) return (hole[0].value === hole[1].value) ? 6 : 1;
             return evaluateHand([...hole, ...comm]).score;
         }
 
         function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
-        function updateButtons(e) { 
-            ['btnCheck', 'btnCall', 'btnRaise', 'btnFold'].forEach(id => {
-                const btn = document.getElementById(id);
-                if(btn) btn.disabled = !e;
-            });
-            const rInput = document.getElementById('raiseInput');
-            if(rInput) rInput.disabled = !e;
-        }
+        function updateButtons(e) { ['btnCheck', 'btnCall', 'btnRaise', 'btnFold'].forEach(id => { const b = document.getElementById(id); if(b) b.disabled = !e; }); }
     </script>
 </body>
 </html>
