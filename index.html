@@ -406,7 +406,6 @@
                     break;
                 }
                 case 'chip': {
-                    // Realistic ceramic clink - 3 high frequency sine waves with fast decay
                     [2800, 3100, 3400].forEach((freq, i) => {
                         const osc = audioCtx.createOscillator();
                         const gain = audioCtx.createGain();
@@ -421,7 +420,6 @@
                     break;
                 }
                 case 'win': {
-                    // Chip spill effect
                     for(let i=0; i<12; i++) {
                         setTimeout(() => playSfx('chip'), i * 40);
                     }
@@ -714,7 +712,11 @@
             updateUI();
             const overlay = document.getElementById('overlay');
             const oText = document.getElementById('overlayText');
-            if(oText) oText.innerHTML = res === 'WIN' ? '<span class="win-text">YOU WIN!</span>' : '<div class="loss-text">BOT WINS</div>';
+            if(oText) {
+                if (res === 'WIN') oText.innerHTML = '<span class="win-text">YOU WIN!</span>';
+                else if (res === 'DRAW') oText.innerHTML = '<div class="loss-text" style="color: #60a5fa">SPLIT POT</div>';
+                else oText.innerHTML = '<div class="loss-text">BOT WINS</div>';
+            }
             const handText = document.getElementById('handRankText');
             if (handText) handText.innerText = hName;
             if (overlay) setTimeout(() => overlay.classList.add('active'), 1000);
